@@ -691,13 +691,19 @@ Modernizr.addTest('track', function(){
                   </dl>
 <p><code>Modernizr.testAllProps()</code> investigates whether a given style property, or any of its vendor-prefixed variants, is recognized. Note that the property names must be provided in the camelCase variant.</p>
 
-
 <pre>Modernizr.testAllProps('boxSizing') <span class="comment"> // true</span> </pre>
 
 <p>The optional <code>value</code> parameter can be used to test if a specific property value is supported. This will use <a href="http://www.w3.org/TR/css3-conditional/#the-css-interface">native feature detection</a> if the browser supports it.</p>
 
-
 <pre>Modernizr.testAllProps('boxSizing', 'border-box') <span class="comment"> // true</span> </pre>
+
+<p>Note that <em>values</em> are <u>not</u> prefixed automatically; to test against prefixed values, you should test each prefix in turn.</p>
+
+<pre>var result = false;
+for(var i = 0; i < Modernizr._prefixes.length; i++) {
+  result = result || Modernizr.testAllProps('display', Modernizr._prefixes[i] + 'flex');
+}
+result <span class="comment"> // true</span> </pre>
 
                </section>
 
