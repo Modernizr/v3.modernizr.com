@@ -686,7 +686,7 @@ Modernizr.addTest('track', function(){
                <h3>testAllProps()</h3>
                   <dl>
                      <dt>JavaScript method:</dt>
-                     <dd><code>Modernizr.<strong>testAllProps(str [,value])</strong></code></dd>
+                     <dd><code>Modernizr.<strong>testAllProps(str [,value [,useValue]])</strong></code></dd>
                      <dt>
                   </dl>
 <p><code>Modernizr.testAllProps()</code> investigates whether a given style property, or any of its vendor-prefixed variants, is recognized. Note that the property names must be provided in the camelCase variant.</p>
@@ -695,15 +695,21 @@ Modernizr.addTest('track', function(){
 
 <p>The optional <code>value</code> parameter can be used to test if a specific property value is supported. This will use <a href="http://www.w3.org/TR/css3-conditional/#the-css-interface">native feature detection</a> if the browser supports it.</p>
 
-<pre>Modernizr.testAllProps('boxSizing', 'border-box') <span class="comment"> // true</span> </pre>
+<pre>Modernizr.testAllProps('display', 'flex') <span class="comment"> // true</span> </pre>
 
-<p>Note that <em>values</em> are <u>not</u> prefixed automatically; to test against prefixed values, you should test each prefix in turn.</p>
+<p>Note that <em>values</em> are <u>not</u> prefixed automatically; to test against prefixed values, you should test each prefix in turn. <a href="#prefixes">Modernizr._prefixes</a> can help with this.</p>
 
 <pre>var result = false;
 for(var i = 0; i < Modernizr._prefixes.length; i++) {
   result = result || Modernizr.testAllProps('display', Modernizr._prefixes[i] + 'flex');
 }
 result <span class="comment"> // true</span> </pre>
+
+<p>The optional <code>useValue</code> parameter can be used to control whether the value is still tested when native detection <em>isn't</em> available. By default, <code>useValue</code> is <code>true</code>: if a <code>value</code> is provided and native detection isn't available, support for the value will be tested manually to give consistent results. However, this can be slow; so to just test for support of a <em>property</em> (rather than a specific value of that property) but still make use of native feature detection when available, you can explicitly set <code>useValue</code> to <code>false</code>.</p>
+
+<pre>Modernizr.testAllProps('boxSizing', 'border-box', false) <span class="comment"> // true</span> </pre>
+
+<p><code>useValue</code> has no effect if <code>value</code> is <code>undefined</code>.</p>
 
                </section>
 
