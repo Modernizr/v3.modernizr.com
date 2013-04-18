@@ -686,14 +686,14 @@ Modernizr.addTest('track', function(){
                <h3>testAllProps()</h3>
                   <dl>
                      <dt>JavaScript method:</dt>
-                     <dd><code>Modernizr.<strong>testAllProps(str [,value [,useValue]])</strong></code></dd>
+                     <dd><code>Modernizr.<strong>testAllProps(str [,value [,skipValueTest]])</strong></code></dd>
                      <dt>
                   </dl>
 <p><code>Modernizr.testAllProps()</code> investigates whether a given style property, or any of its vendor-prefixed variants, is recognized. Note that the property names must be provided in the camelCase variant.</p>
 
 <pre>Modernizr.testAllProps('boxSizing') <span class="comment"> // true</span> </pre>
 
-<p>The optional <code>value</code> parameter can be used to test if a specific property value is supported. This will use <a href="http://www.w3.org/TR/css3-conditional/#the-css-interface">native feature detection</a> if the browser supports it.</p>
+<p>The optional (but recommended) <code>value</code> parameter can be used to test if a specific property value is supported. This will use <a href="http://www.w3.org/TR/css3-conditional/#the-css-interface">native feature detection</a> if the browser supports it.</p>
 
 <pre>Modernizr.testAllProps('display', 'flex') <span class="comment"> // true</span> </pre>
 
@@ -705,11 +705,15 @@ for(var i = 0; i < Modernizr._prefixes.length; i++) {
 }
 result <span class="comment"> // true</span> </pre>
 
-<p>The optional <code>useValue</code> parameter can be used to control whether the value is still tested when native detection <em>isn't</em> available. By default, <code>useValue</code> is <code>true</code>: if a <code>value</code> is provided and native detection isn't available, support for the value will be tested manually to give consistent results. However, this can be slow; so to just test for support of a <em>property</em> (rather than a specific value of that property) but still make use of native feature detection when available, you can explicitly set <code>useValue</code> to <code>false</code>.</p>
+<p>Native detection can only be used if a <code>value</code> is provided. For consistency, if native detection <em>isn't</em> available, Modernizr manually tests that the browser supports the value for this property; however this can be slow. You can tell Modernizr <em>not</em> to perform this manual test (and just test the property), but still use native detection when available, by setting the <code>skipValueTest</code> property to <code>true</code>.
 
-<pre>Modernizr.testAllProps('boxSizing', 'border-box', false) <span class="comment"> // true</span> </pre>
+<pre>Modernizr.testAllProps('boxSizing', 'border-box', true) <span class="comment"> // true</span> </pre>
 
-<p><code>useValue</code> has no effect if <code>value</code> is <code>undefined</code>.</p>
+<p><b>Take care:</b> that this can appear to give a "false positive" for unsupported values of supported properties when native detection isn't available.</p>
+
+<pre>Modernizr.testAllProps('display', 'invalid', true) <span class="comment"> // true if native detection not available</span> </pre>
+
+<p><code>skipValueTest</code> has no effect if <code>value</code> is <code>undefined</code>.</p>
 
                </section>
 
