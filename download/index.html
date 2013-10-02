@@ -3,57 +3,74 @@ layout:  default
 title:   Modernizr Download Builder
 body_id: builder
 ---
-            <section id="download" class="wt ">
-               <h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
-               <p class="intro-p">Use the <a href="/downloads/modernizr-latest.js">Development version</a> to develop with and learn from. Then, when you’re ready for production, use the build tool below to pick only the tests you need.</p>
+<section id="download" class="wt ">
+	<h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
+	<p class="intro-p">Use the build tool below to pick only the tests you need.</p>
 
-               <div class="swap-region">
-               <form action="#" class="builder">
-                  <fieldset class="options">
-                     <legend class="wt">Options</legend>
-                     <ul id="options-list">
-                     </ul>
-                  </fieldset>
-                  <fieldset class="feature-detects">
-                     <legend class="wt">Feature Detects</legend>
-                     <ul id="fd-list">
-                     </ul>
-                  </fieldset>
+	<div class="swap-region">
+	<form action="#" class="builder">
+		<fieldset class="feature-detects builder">
+			<div class="builder-fieldset-header">
+				<legend class="wt">Feature Detects</legend>
+				<label class="builder-filter-field">Filter: <input type="search" id="feature-detects-filter" placeholder="e.g. flexbox"></label>
+				<style id="feature-detects-filter-styles"></style>
+			</div>
+			<ul id="fd-list" class="builder-fieldset-list">
+			</ul>
+		</fieldset>
 
+		<fieldset class="options builder">
+			<div class="builder-fieldset-header">
+				<legend class="wt">Options</legend>
+			</div>
+			<ul id="options-list" class="builder-fieldset-list">
+			</ul>
+		</fieldset>
 
-                  <div class="buttons-area">
-                     <a href="#-generate" class="wt btn dev" id="generate">Generate! <span>(requires JavaScript)</span></a>
-                     <a class="btn2">Download custom build</a>
-                  </div>
-               </form>
+		<div class="buttons-area">
+			<a href="#-generate" class="wt btn dev" id="generate">Generate! <span>(requires JavaScript)</span></a>
+			<a class="btn2">Download custom build</a>
+		</div>
+	</form>
 
-               <div id="source">
-                  <textarea readonly="readonly" class="source-area default" id="generatedSource">// Minified source</textarea>
-                  <div class="dontmin-container"><label for="dontmin"><input type="checkbox" id="dontmin" value="dontmin" /> <small>Don't Minify Source</small></label></div>
-               </div>
+	<div id="source">
+		<textarea readonly="readonly" class="source-area default" id="generatedSource">// Minified source</textarea>
+		<div class="dontmin-container"><label for="dontmin"><input type="checkbox" id="dontmin" value="dontmin" /> <small>Don't Minify Source</small></label></div>
+	</div>
 
-               </div><!-- .swap-region -->
+	</div><!-- .swap-region -->
 
-            </section>
+</section>
 
-            <script>
+<script>
 var options = ["addTest","attrs","classes","contains","createElement","cssomPrefixes","docElement","domPrefixes","fnBind","hasEvent","hasOwnProp","html5printshiv","html5shiv","injectElementWithStyles","inputattrs","inputElem","inputs","is","inputtypes","isEventSupported","load","modElem","mq","mStyle","omPrefixes","prefixed","prefixes","setClasses","setCss","setCssAll","slice","smile","testAllProps","testDOMProps","testMediaQuery","testProp","testProps","testPropsAll","testRunner","tests","testStyles","toStringFn"];
 
 $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
-  var fds = "";
-  $.each(detects, function (idx, detect) {
-    fds += '<li id="'+detect.property+'"><label><input type="checkbox" value="'+detect.amdPath+'" />'+detect.name+'</label></li>'
-  });
+	$.each(detects, function (idx, detect) {
+		var searchIndex = [detect.property, detect.amdPath, detect.name].concat(detect.tags).join('|').toLowerCase();
+		var $li = $('<li>').attr('id', detect.property).attr('data-index', searchIndex);
+		var $label = $('<label>').text(detect.name).appendTo($li);
+		var $input = $('<input type="checkbox">').attr('value', detect.amdPath).prependTo($label);
+		$('#fd-list').append($li);
+	});
 
-  var ops = "";
-  $.each(options, function (idx, item) {
-    ops += '<li id="'+item+'"><label><input type="checkbox" value="'+item+'" />'+item+'</label></li>'
-  });
+	var ops = "";
+	$.each(options, function (idx, item) {
+		ops += '<li id="'+item+'"><label><input type="checkbox" value="'+item+'" />'+item+'</label></li>'
+	});
 
-  // $('#options-list').html(ops);
-  $('#fd-list').html(fds);
+	$('#options-list').html(ops);
+
+	$('#feature-detects-filter').on('input', function (evt) {
+		if (!evt.currentTarget.value) {
+			$('#feature-detects-filter-styles').text('');
+		}
+		else {
+			$('#feature-detects-filter-styles').text('#fd-list li:not([data-index*="' + this.value.toLowerCase() + '"]) { display: none; }');
+		}
+	});
 });
-            </script>
-            <script src="/i/js/modernizr-git/test/r.js"></script>
-            <script src="http://underscorejs.org/underscore-min.js"></script>
-        <script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
+</script>
+<script src="/i/js/modernizr-git/test/r.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
