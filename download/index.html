@@ -19,18 +19,24 @@ body_id: builder
 			</ul>
 		</fieldset>
 
-		<fieldset class="options builder">
+		<fieldset class="extras builder">
 			<div class="builder-fieldset-header">
-				<legend class="wt">Options</legend>
+				<legend class="wt">Extras</legend>
 			</div>
-			<ul id="options-list" class="builder-fieldset-list">
+			<ul id="extras-list" class="builder-fieldset-list">
+				<li>
+					<input type="checkbox">
+				</li>
 			</ul>
 		</fieldset>
+
+		<div id="help-box" class="help-box"></div>
 
 		<div class="buttons-area">
 			<a href="#-generate" class="wt btn dev" id="generate">Generate! <span>(requires JavaScript)</span></a>
 			<a class="btn2">Download custom build</a>
 		</div>
+
 	</form>
 
 	<div id="source">
@@ -42,16 +48,80 @@ body_id: builder
 
 </section>
 
+<script type="text/x-underscore-template" id="detect-item-tpl">
+	<li id="<%- detect.property %>" data-index="<%- searchIndex %>">
+		<input type="checkbox" value="<%- detect.amdPath %>" id="id-field-<%- detect.property %>">
+		<label for="id-field-<%- detect.property %>">
+			<%- detect.name %>
+		</label>
+		<% if (detect.doc) { %>
+			<a class="help-icon" data-name="<%- detect.name %>" data-doc="<%- detect.doc %>">Info</a>
+		<% } %>
+	</li>
+</script>
+
+<script type="text/x-underscore-template" id="help-tpl">
+	<h2><%- name %></h2>
+	<%= doc %>
+</script>
+
+<script src="/i/js/modernizr-git/test/r.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
 <script>
-var options = ["addTest","attrs","classes","contains","createElement","cssomPrefixes","docElement","domPrefixes","fnBind","hasEvent","hasOwnProp","html5printshiv","html5shiv","injectElementWithStyles","inputattrs","inputElem","inputs","is","inputtypes","isEventSupported","load","modElem","mq","mStyle","omPrefixes","prefixed","prefixes","setClasses","setCss","setCssAll","slice","smile","testAllProps","testDOMProps","testMediaQuery","testProp","testProps","testPropsAll","testRunner","tests","testStyles","toStringFn"];
+var extras = [
+	{
+		name: 'html5shiv v3.6.2',
+		option: 'html5shiv'
+	}, {
+		name: 'html5shiv v3.6.2 w/ printshiv',
+		option: 'html5printshiv'
+	}, {
+		name: 'Modernizr.load (<a href="http://yepnopejs.com/">YepNope.js</a>)',
+		option: 'load'
+	}, {
+		name: 'Media Queries',
+		option: 'mq'
+	}, {
+		name: 'Add CSS classes',
+		option: 'setClasses',
+		associatedValue: 'classPrefix'
+	}
+];
+var extensibility = [];
+var options = [];
 
 $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
+	var $fdList = $('#fd-list');
+	var $helpBox = $('#help-box');
+	var detectItemTpl = _.template($('#detect-item-tpl').html());
+	var helpTpl = _.template($('#help-tpl').html());
+	var detects = _.sortBy(detects, function (detect) {
+		return detect.name.toLowerCase();
+	});
 	$.each(detects, function (idx, detect) {
 		var searchIndex = [detect.property, detect.amdPath, detect.name].concat(detect.tags).join('|').toLowerCase();
-		var $li = $('<li>').attr('id', detect.property).attr('data-index', searchIndex);
-		var $label = $('<label>').text(detect.name).appendTo($li);
-		var $input = $('<input type="checkbox">').attr('value', detect.amdPath).prependTo($label);
+		console.log(JSON.stringify(detect));
+		var $li = $(detectItemTpl({
+			detect: detect,
+			searchIndex: searchIndex
+		}));
+		// On hover
 		$('#fd-list').append($li);
+	});
+
+	$fdList.on('click', '.help-icon', function (evt) {
+		var $help = $(helpTpl({
+			name: this.getAttribute('data-name'),
+			doc: this.getAttribute('data-doc')
+		}));
+		$helpBox.html($help).addClass('help-box--visible');
+
+		evt.stopPropagation();
+	});
+	$(document).on('click', function () {
+		$helpBox.html('');
+		$helpBox.removeClass('help-box--visible');
 	});
 
 	var ops = "";
@@ -62,6 +132,7 @@ $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
 	$('#options-list').html(ops);
 
 	$('#feature-detects-filter').on('input', function (evt) {
+		console.log('input');
 		if (!evt.currentTarget.value) {
 			$('#feature-detects-filter-styles').text('');
 		}
@@ -71,6 +142,3 @@ $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
 	});
 });
 </script>
-<script src="/i/js/modernizr-git/test/r.js"></script>
-<script src="http://underscorejs.org/underscore-min.js"></script>
-<script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
