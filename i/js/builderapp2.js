@@ -45,10 +45,10 @@ require(['src/generate'], function( generate ) {
     return stream.toString();
   }
 
-  function hashFromOptions(properties, options, classPrefix) {
-    var buildHash = _(properties).map(function(propName) {
+  function generateBuildHash(config) {
+    var buildHash = _(config.properties).map(function(propName) {
         return propName.replace('-', '');
-      }).join('-') + ( classPrefix ? '-cssclassprefix:' + classPrefix.replace(/\-/g, '!') : '' );
+      }).join('-') + ( config.classPrefix ? '-cssclassprefix:' + config.classPrefix.replace(/\-/g, '!') : '' );
 
     return buildHash;
   }
@@ -152,7 +152,7 @@ require(['src/generate'], function( generate ) {
         }
         //var outBox = document.getElementById('buildoutput');
         var outBoxMin = document.getElementById('generatedSource');
-        var buildHash = hashFromOptions(config.properties, config.options, config.classPrefix);
+        var buildHash = generateBuildHash(config);
         var banner = '/*! Modernizr 3.0.0-beta (Custom Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/#-' + buildHash + '\n' +
                      ' */\n';
@@ -252,7 +252,8 @@ require(['src/generate'], function( generate ) {
   });
 
   $('#generate').on('click', function () {
-    // hashFromOptions();
+    // var config = getBuildConfig();
+    // var buildHash = generateBuildHash(config);
     build();
   });
 
