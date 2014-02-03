@@ -23,7 +23,7 @@
         "optimize"    : "none",
         "optimizeCss" : "none",
         "paths" : {
-          "test" : "../../../../feature-detects",
+          "test" : "../../../../feature-detects"
         },
         "include" : ["modernizr-init"],
         wrap: {
@@ -59,14 +59,24 @@
           }
           //var outBox = document.getElementById('buildoutput');
           var outBoxMin = document.getElementById('generatedSource');
+          var tests = config['feature-detects'];
+          var classPrefix = config.classPrefix;
+          var buildHash = _(tests).map(function(x) {
+              var propName = x.split('/')[x.split('/').length - 1];
+              console.log(propName);
+              return propName.replace('-', '_');
+            }).join('-') + ( classPrefix ? '-cssclassprefix:' + classPrefix.replace(/\-/g, '!') : '' );
+          var banner = '/*! Modernizr 3.0.0-beta (Custom Build) | MIT\n' +
+                       ' *  Build: http://modernizr.com/download/#-' + buildHash + '\n' +
+                       ' */\n';
 
           if ( $('#dontmin').is(':checked') ) {
-            outBoxMin.innerHTML = '/*! Modernizr 3.0.0pre (Custom Build) | MIT */\n' + output;
+            outBoxMin.innerHTML = banner + output;
           }
           else {
             require({context: 'build'}, ['uglifyjs2'], function (u2){
               var UglifyJS = u2.UglifyJS;
-              outBoxMin.innerHTML = '/*! Modernizr 3.0.0pre (Custom Build) | MIT */\n' + minify(UglifyJS, output, {});
+              outBoxMin.innerHTML = banner + minify(UglifyJS, output, {});
             });
           }
 
