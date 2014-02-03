@@ -575,7 +575,7 @@ nav {
 
 /* Download page / builder */
 .features {
-  margin: 2em 0 0 10px;
+  margin: 5em 0 0 10px;
 }
 .features legend, .features summary {
   font-size: 24px;
@@ -642,11 +642,14 @@ nav {
 input[type=search] {
   width: 15em;
 }
+.builder-fieldset-header {
+  padding: 15px 10px 5px;
+}
 .builder-fieldset-list {
   -webkit-column-width: 15em;
   -moz-column-width: 15em;
   column-width: 15em;
-  margin: 1em 0 2em;
+  margin: 0 0 2em;
 }
 .builder li {
   padding-left: 1.15em;
@@ -1359,12 +1362,7 @@ body { height: 100%; }
     -moz-box-shadow: rgba(20,20,20, .24) 1px 2px 3px inset;
     -o-box-shadow: rgba(20,20,20, .24) 1px 2px 3px inset;
     box-shadow: rgba(20,20,20, .24) 1px 2px 3px inset;
-
-    float: left;
-    margin: 3em 0 10px 20px;
     position: relative;
-    width: 28%;
-    z-index: 5;
   }
   #group-css3,
   #group-html5 {
@@ -1419,23 +1417,6 @@ body { height: 100%; }
   #dontmin {
     margin-bottom: 3.5px;
   }
-  .features label {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    padding: 0 4px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-    -webkit-transition: background-color .3s ease-out;
-    -moz-transition: background-color .3s ease-out;
-    -o-transition: background-color .3s ease-out;
-    transition: background-color .3s ease-out;
-  }
   .features label:hover, .features #cssprefixcontainer:hover {
     background: rgba(20,20,20, .42);
     -webkit-transition-duration: .15s;
@@ -1451,9 +1432,6 @@ body { height: 100%; }
     height: 10em;
   }
   /* input[type=text] */
-  .features div {
-    margin: 4px;
-  }
   .textfield {
     background: #ababab;
     border: 1px solid #999;

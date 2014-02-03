@@ -5,15 +5,15 @@ body_id: builder
 ---
 <section id="download" class="wt ">
 	<h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
-	<p class="intro-p">Use the build tool below to pick only the tests you need.</p>
+	<p class="intro-p">Use the build tool below to pick only the tests you need, or select the <a href="#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-flexbox_legacy-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load-dontmin">development preset</a>.</p>
 
 	<div class="swap-region">
 	<form action="#" class="builder">
-		<fieldset class="feature-detects builder">
+		<fieldset class="features builder">
 			<div class="builder-fieldset-header">
 				<legend class="wt">Feature Detects</legend>
-				<label class="builder-filter-field">Filter: <input type="search" id="feature-detects-filter" placeholder="e.g. flexbox"></label>
-				<style id="feature-detects-filter-styles"></style>
+				<label class="builder-filter-field">Filter: <input type="search" id="features-filter" placeholder="e.g. flexbox"></label>
+				<style id="features-filter-styles"></style>
 			</div>
 			<ul id="fd-list" class="builder-fieldset-list">
 			</ul>
@@ -51,7 +51,6 @@ body_id: builder
 <script type="text/x-underscore-template" id="detect-item-tpl">
 	<li id="<%- detect.property %>" data-index="<%- searchIndex %>">
 		<input type="checkbox" value="<%- detect.amdPath %>" id="id-field-<%- detect.property %>">
-		<label for="id-field-<%- detect.property %>">
 			<%- detect.name %>
 		</label>
 		<% if (detect.doc) { %>
@@ -101,7 +100,6 @@ $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
 	});
 	$.each(detects, function (idx, detect) {
 		var searchIndex = [detect.property, detect.amdPath, detect.name].concat(detect.tags).join('|').toLowerCase();
-		console.log(JSON.stringify(detect));
 		var $li = $(detectItemTpl({
 			detect: detect,
 			searchIndex: searchIndex
@@ -131,13 +129,13 @@ $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
 
 	$('#options-list').html(ops);
 
-	$('#feature-detects-filter').on('input', function (evt) {
+	$('#features-filter').on('input', function (evt) {
 		console.log('input');
 		if (!evt.currentTarget.value) {
-			$('#feature-detects-filter-styles').text('');
+			$('#features-filter-styles').text('');
 		}
 		else {
-			$('#feature-detects-filter-styles').text('#fd-list li:not([data-index*="' + this.value.toLowerCase() + '"]) { display: none; }');
+			$('#features-filter-styles').text('#fd-list li:not([data-index*="' + this.value.toLowerCase() + '"]) { display: none; }');
 		}
 	});
 });
