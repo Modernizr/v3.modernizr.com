@@ -80,25 +80,35 @@ require(['src/generate'], function( generate ) {
     }
   }
 
-  // Handle a build
-  function build() {
+  function getBuildConfig() {
     var $featureCheckboxes = $('#fd-list input:checked');
-    var amdPaths = $.makeArray($featureCheckboxes.map(function() {
-      return this.getAttribute('data-amd-path');
-    }));
+    // A list of the property names, e.g. `['flexbox', …]`
     var properties = $.makeArray($('#fd-list input:checked').map(function() {
       return this.value;
     }));
+    // A list of the corresponding AMD paths, e.g. `['test/css/flexbox', …]`
+    var amdPaths = $.makeArray($featureCheckboxes.map(function() {
+      return this.getAttribute('data-amd-path');
+    }));
+    // Additional options
     var options = $.makeArray($('#options-list input:checked').map(function() {
       return this.value;
     }));
     var classPrefix = ''; // TODO
     var config = {
       'classPrefix': classPrefix,
+      'properties': properties, // Not used by builder; we need it though
       'feature-detects': amdPaths,
       'options': options
     };
 
+    return config;
+  }
+
+  // Handle a build
+  function build() {
+
+    var config = getBuildConfig();
     var modInit = generate(config);
 
     requirejs.optimize({
@@ -137,12 +147,12 @@ require(['src/generate'], function( generate ) {
       out : function (output) {
         output = output.replace('define("modernizr-init", function(){});', '');
         // Hack the prefix into place. Anything is way to big for something so small.
-        if ( classPrefix ) {
-          output = output.replace("classPrefix : '',", "classPrefix : '" + classPrefix.replace(/"/g, '\\"') + "',");
+        if ( config.classPrefix ) {
+          output = output.replace("classPrefix : '',", "classPrefix : '" + config.classPrefix.replace(/"/g, '\\"') + "',");
         }
         //var outBox = document.getElementById('buildoutput');
         var outBoxMin = document.getElementById('generatedSource');
-        var buildHash = hashFromOptions(properties, options, classPrefix);
+        var buildHash = hashFromOptions(config.properties, config.options, config.classPrefix);
         var banner = '/*! Modernizr 3.0.0-beta (Custom Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/#-' + buildHash + '\n' +
                      ' */\n';
@@ -242,7 +252,7 @@ require(['src/generate'], function( generate ) {
   });
 
   $('#generate').on('click', function () {
-    // window.location.hash
+    // hashFromOptions();
     build();
   });
 
