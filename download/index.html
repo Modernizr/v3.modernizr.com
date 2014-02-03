@@ -5,7 +5,7 @@ body_id: builder
 ---
 <section id="download" class="wt ">
 	<h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
-	<p class="intro-p">Use the build tool below to pick only the tests you need, or select the <a href="#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-flexbox_legacy-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load-dontmin">development preset</a>.</p>
+	<p class="intro-p">Use the build tool below to pick only the tests you need, or select the <a href="#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-flexboxlegacy-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load-dontmin">development preset</a>.</p>
 
 	<div class="swap-region">
 	<form action="#" class="builder">
@@ -33,7 +33,7 @@ body_id: builder
 		<div id="help-box" class="help-box"></div>
 
 		<div class="buttons-area">
-			<a href="#" class="wt btn dev" id="generate">Generate! <span>(requires JavaScript)</span></a>
+			<a href="#-" class="wt btn dev" id="generate">Generate! <span>(requires JavaScript)</span></a>
 			<a class="btn2">Download custom build</a>
 		</div>
 
@@ -67,76 +67,3 @@ body_id: builder
 <script src="/i/js/modernizr-git/test/r.js"></script>
 <script src="http://underscorejs.org/underscore-min.js"></script>
 <script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
-<script>
-var extras = [
-	{
-		name: 'html5shiv v3.6.2',
-		option: 'html5shiv'
-	}, {
-		name: 'html5shiv v3.6.2 w/ printshiv',
-		option: 'html5printshiv'
-	}, {
-		name: 'Modernizr.load (<a href="http://yepnopejs.com/">YepNope.js</a>)',
-		option: 'load'
-	}, {
-		name: 'Media Queries',
-		option: 'mq'
-	}, {
-		name: 'Add CSS classes',
-		option: 'setClasses',
-		associatedValue: 'classPrefix'
-	}
-];
-var extensibility = [];
-var options = [];
-
-$.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
-	var $fdList = $('#fd-list');
-	var $helpBox = $('#help-box');
-	var detectItemTpl = _.template($('#detect-item-tpl').html());
-	var helpTpl = _.template($('#help-tpl').html());
-	var detects = _.sortBy(detects, function (detect) {
-		return detect.name.toLowerCase();
-	});
-	$.each(detects, function (idx, detect) {
-		var searchIndex = [detect.property, detect.amdPath, detect.name].concat(detect.tags).join('|').toLowerCase();
-		var $li = $(detectItemTpl({
-			detect: detect,
-			searchIndex: searchIndex
-		}));
-		// On hover
-		$('#fd-list').append($li);
-	});
-
-	$fdList.on('click', '.help-icon', function (evt) {
-		var $help = $(helpTpl({
-			name: this.getAttribute('data-name'),
-			doc: this.getAttribute('data-doc')
-		}));
-		$helpBox.html($help).addClass('help-box--visible');
-
-		evt.stopPropagation();
-	});
-	$(document).on('click', function () {
-		$helpBox.html('');
-		$helpBox.removeClass('help-box--visible');
-	});
-
-	var ops = "";
-	$.each(options, function (idx, item) {
-		ops += '<li id="'+item+'"><label><input type="checkbox" value="'+item+'" />'+item+'</label></li>'
-	});
-
-	$('#options-list').html(ops);
-
-	$('#features-filter').on('input', function (evt) {
-		console.log('input');
-		if (!evt.currentTarget.value) {
-			$('#features-filter-styles').text('');
-		}
-		else {
-			$('#features-filter-styles').text('#fd-list li:not([data-index*="' + this.value.toLowerCase() + '"]) { display: none; }');
-		}
-	});
-});
-</script>
