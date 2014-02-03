@@ -50,7 +50,7 @@ body_id: builder
 
 <script type="text/x-underscore-template" id="detect-item-tpl">
 	<li id="<%- detect.property %>" data-index="<%- searchIndex %>">
-		<input type="checkbox" value="<%- detect.amdPath %>" id="id-field-<%- detect.property %>">
+		<input type="checkbox" data-amd-path="<%- detect.amdPath %>" value="<%- detect.property %>">
 			<%- detect.name %>
 		</label>
 		<% if (detect.doc) { %>

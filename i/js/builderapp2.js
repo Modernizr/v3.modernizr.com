@@ -64,7 +64,7 @@ require(['src/generate'], function( generate ) {
           $('#dontmin').attr('checked', 'checked');
         }
         else {
-          $('#id-field-'+selections[i]).attr('checked', 'checked');
+          $('input[value=' + selections[i] + ']').attr('checked', 'checked');
         }
       }
       var checked = $('#cssclasses input:checkbox').is(':checked');
@@ -76,10 +76,20 @@ require(['src/generate'], function( generate ) {
 
   // Handle a build
   function build() {
+    var $featureCheckboxes = $('#fd-list input:checked');
+    var amdPaths = $.makeArray($featureCheckboxes.map(function() {
+      return this.getAttribute('data-amd-path');
+    }));
+    var properties = $.makeArray($('#fd-list input:checked').map(function() {
+      return this.value;
+    }));
+    var options = $.makeArray($('#options-list input:checked').map(function() {
+      return this.value;
+    }));
     var config = {
-      'classPrefix' : '',
-      'feature-detects' : $.makeArray($('#fd-list input:checked').map(function(){ return this.value; })),
-      'options' : $.makeArray($('#options-list input:checked').map(function(){ return this.value; }))
+      'classPrefix': '',
+      'feature-detects': amdPaths,
+      'options': options
     };
 
     var modInit = generate(config);
@@ -125,12 +135,11 @@ require(['src/generate'], function( generate ) {
         }
         //var outBox = document.getElementById('buildoutput');
         var outBoxMin = document.getElementById('generatedSource');
-        var tests = config['feature-detects'];
         var classPrefix = config.classPrefix;
-        var buildHash = _(tests).map(function(x) {
+        var buildHash = _(properties).map(function(x) {
             var propName = x.split('/')[x.split('/').length - 1];
             console.log(propName);
-            return propName.replace('-', '_');
+            return propName.replace('-', '');
           }).join('-') + ( classPrefix ? '-cssclassprefix:' + classPrefix.replace(/\-/g, '!') : '' );
         var banner = '/*! Modernizr 3.0.0-beta (Custom Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/#-' + buildHash + '\n' +
