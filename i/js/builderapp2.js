@@ -8,8 +8,6 @@ define('underscore', function () { return _; });
 
 require(['src/generate'], function( generate ) {
 
-  var buildButton = document.getElementById('generate');
-
   function minify( UglifyJS, code, options) {
     options = UglifyJS.defaults(options, {
       outSourceMap : null,
@@ -47,6 +45,14 @@ require(['src/generate'], function( generate ) {
     return stream.toString();
   }
 
+  function hashFromOptions(properties, options, classPrefix) {
+    var buildHash = _(properties).map(function(propName) {
+        return propName.replace('-', '');
+      }).join('-') + ( classPrefix ? '-cssclassprefix:' + classPrefix.replace(/\-/g, '!') : '' );
+
+    return buildHash;
+  }
+
   // Check for preselections
   function loadFromHash() {
     var hash = window.location.hash;
@@ -70,7 +76,7 @@ require(['src/generate'], function( generate ) {
       var checked = $('#cssclasses input:checkbox').is(':checked');
       $('#cssprefixcontainer').toggle(checked);
 
-      $('#generate').click();
+      build();
     }
   }
 
@@ -86,8 +92,9 @@ require(['src/generate'], function( generate ) {
     var options = $.makeArray($('#options-list input:checked').map(function() {
       return this.value;
     }));
+    var classPrefix = ''; // TODO
     var config = {
-      'classPrefix': '',
+      'classPrefix': classPrefix,
       'feature-detects': amdPaths,
       'options': options
     };
@@ -130,17 +137,12 @@ require(['src/generate'], function( generate ) {
       out : function (output) {
         output = output.replace('define("modernizr-init", function(){});', '');
         // Hack the prefix into place. Anything is way to big for something so small.
-        if ( config && config.classPrefix ) {
-          output = output.replace("classPrefix : '',", "classPrefix : '" + config.classPrefix.replace(/"/g, '\\"') + "',");
+        if ( classPrefix ) {
+          output = output.replace("classPrefix : '',", "classPrefix : '" + classPrefix.replace(/"/g, '\\"') + "',");
         }
         //var outBox = document.getElementById('buildoutput');
         var outBoxMin = document.getElementById('generatedSource');
-        var classPrefix = config.classPrefix;
-        var buildHash = _(properties).map(function(x) {
-            var propName = x.split('/')[x.split('/').length - 1];
-            console.log(propName);
-            return propName.replace('-', '');
-          }).join('-') + ( classPrefix ? '-cssclassprefix:' + classPrefix.replace(/\-/g, '!') : '' );
+        var buildHash = hashFromOptions(properties, options, classPrefix);
         var banner = '/*! Modernizr 3.0.0-beta (Custom Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/#-' + buildHash + '\n' +
                      ' */\n';
@@ -239,6 +241,9 @@ require(['src/generate'], function( generate ) {
     loadFromHash();
   });
 
-  buildButton.onclick = build;
+  $('#generate').on('click', function () {
+    // window.location.hash
+    build();
+  });
 
 });
