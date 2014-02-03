@@ -6,16 +6,17 @@
 // avoid some config
   define('underscore', function () { return _; });
 
-  var buildButton = document.getElementById('generate');
-  // Handle a build
-  buildButton.onclick = function () {
-    var config = {
-      'classPrefix' : '',
-      'feature-detects' : $.makeArray($('#fd-list input:checked').map(function(){ return this.value; })),
-      'options' : $.makeArray($('#options-list input:checked').map(function(){ return this.value; }))
-    };
+  require(['src/generate'], function( generate ) {
 
-    require(['src/generate'], function( generate ) {
+    var buildButton = document.getElementById('generate');
+    // Handle a build
+    buildButton.onclick = function () {
+      var config = {
+        'classPrefix' : '',
+        'feature-detects' : $.makeArray($('#fd-list input:checked').map(function(){ return this.value; })),
+        'options' : $.makeArray($('#options-list input:checked').map(function(){ return this.value; }))
+      };
+
       var modInit = generate(config);
 
       requirejs.optimize({
@@ -86,9 +87,9 @@
       }, function (buildText) {
         console.log({ buildOutput: buildText });
       });
-    });
+    };
 
-  };
+  });
 
   function minify( UglifyJS, code, options) {
     options = UglifyJS.defaults(options, {
