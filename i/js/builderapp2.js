@@ -198,7 +198,6 @@ require(['src/generate'], function( generate ) {
     }
   ];
   var extensibility = [];
-  var options = [];
 
   // Load feature detects from metadata
   $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
@@ -233,13 +232,6 @@ require(['src/generate'], function( generate ) {
       $helpBox.html('');
       $helpBox.removeClass('help-box--visible');
     });
-
-    var ops = "";
-    $.each(options, function (idx, item) {
-      ops += '<li id="'+item+'"><label><input type="checkbox" value="'+item+'" />'+item+'</label></li>';
-    });
-
-    $('#options-list').html(ops);
 
     $('#features-filter').on('input', function (evt) {
       console.log('input');

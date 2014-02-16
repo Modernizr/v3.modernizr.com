@@ -21,11 +21,38 @@ body_id: builder
 
 		<fieldset class="extras builder">
 			<div class="builder-fieldset-header">
-				<legend class="wt">Extras</legend>
+				<legend class="wt">Options</legend>
 			</div>
-			<ul id="extras-list" class="builder-fieldset-list">
-				<li>
-					<input type="checkbox">
+			<ul id="options-list" class="builder-fieldset-list">
+				<li id="html5shiv">
+					<label>
+						<input type="checkbox" value="html5shiv">html5shiv
+					</label>
+				</li>
+				<li id="html5printshiv">
+					<label>
+						<input type="checkbox" value="html5printshiv">html5printshiv
+					</label>
+				</li>
+				<li id="load">
+					<label>
+						<input type="checkbox" value="load">Modernizr.load (<a href="http://yepnope.js">yepnope.js</a>)
+					</label>
+				</li>
+				<li id="mq">
+					<label>
+						<input type="checkbox" value="mq">Media queries
+					</label>
+				</li>
+				<li id="setClasses">
+					<label>
+						<input type="checkbox" value="setClasses">Add CSS classes
+					</label>
+				</li>
+				<li id="classPrefix">
+					<label>
+						className prefix: <input type="text" name="classPrefix">
+					</label>
 				</li>
 			</ul>
 		</fieldset>
@@ -50,7 +77,8 @@ body_id: builder
 
 <script type="text/x-underscore-template" id="detect-item-tpl">
 	<li id="<%- detect.property %>" data-index="<%- searchIndex %>">
-		<input type="checkbox" data-amd-path="<%- detect.amdPath %>" value="<%- detect.property %>">
+		<label>
+			<input type="checkbox" data-amd-path="<%- detect.amdPath %>" value="<%- detect.property %>">
 			<%- detect.name %>
 		</label>
 		<% if (detect.doc) { %>
