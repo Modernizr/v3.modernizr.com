@@ -19,10 +19,8 @@ body_id: builder
 			</ul>
 		</fieldset>
 
-		<fieldset class="extras builder">
-			<div class="builder-fieldset-header">
-				<legend class="wt">Options</legend>
-			</div>
+		<fieldset class="features builder">
+			<legend class="wt">Options</legend>
 			<ul id="options-list" class="builder-fieldset-list">
 				<li id="html5shiv">
 					<label>
@@ -36,12 +34,12 @@ body_id: builder
 				</li>
 				<li id="load">
 					<label>
-						<input type="checkbox" value="load">Modernizr.load (<a href="http://yepnope.js">yepnope.js</a>)
+						<input type="checkbox" value="load">Modernizr.load ( <a href="http://yepnope.js">yepnope.js</a> )
 					</label>
 				</li>
 				<li id="mq">
 					<label>
-						<input type="checkbox" value="mq">Media queries
+						<input type="checkbox" value="mq"><abbr class="help" title="`window.matchMedia` polyfill">Modernizr.mq</abbr>
 					</label>
 				</li>
 				<li id="setClasses">
@@ -51,7 +49,8 @@ body_id: builder
 				</li>
 				<li id="classPrefix">
 					<label>
-						className prefix: <input type="text" name="classPrefix">
+						<abbr class="help" title="Add a prefix if Modernizr’s default class names conflict with your CSS. A prefix of `mod-` means classes like `.mod-video`">className prefix:</abbr>
+						<input id="cssprefix" class="textfield" type="text" name="classPrefix">
 					</label>
 				</li>
 			</ul>

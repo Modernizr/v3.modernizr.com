@@ -1440,8 +1440,7 @@ body { height: 100%; }
     border-bottom: 1px dotted  #3589db;
     font-weight: normal;
     color:inherit;
-        margin-right: 10px;
-        font-size: 90%;
+    margin-right: 0.2em;
   }
   #cssprefix {
     width: 64px;
