@@ -46,7 +46,7 @@ require(['src/generate'], function( generate ) {
   }
 
   function generateBuildHash(config) {
-    var buildHash = _(config.properties).map(function(propName) {
+    var buildHash = '#-' + _(config.properties).map(function(propName) {
         return propName.replace('-', '');
       }).join('-') + ( config.classPrefix ? '-cssclassprefix:' + config.classPrefix.replace(/\-/g, '!') : '' );
 
@@ -154,7 +154,7 @@ require(['src/generate'], function( generate ) {
         var outBoxMin = document.getElementById('generatedSource');
         var buildHash = generateBuildHash(config);
         var banner = '/*! Modernizr 3.0.0-beta (Custom Build) | MIT\n' +
-                     ' *  Build: http://modernizr.com/download/#-' + buildHash + '\n' +
+                     ' *  Build: http://modernizr.com/download/' + buildHash + '\n' +
                      ' */\n';
 
         if ( $('#dontmin').is(':checked') ) {
@@ -252,8 +252,9 @@ require(['src/generate'], function( generate ) {
   });
 
   $('#generate').on('click', function () {
-    // var config = getBuildConfig();
-    // var buildHash = generateBuildHash(config);
+    var config = getBuildConfig();
+    var buildHash = generateBuildHash(config);
+    window.location.hash = buildHash;
     build();
   });
 
