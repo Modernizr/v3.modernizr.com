@@ -220,11 +220,11 @@ a {
 }
 
 /* Typekit override */
-body .title,
-.wf-active header,
-.wf-active nav,
-.wf-active article,
-.wf-active section {
+body,
+select,
+input,
+textarea,
+button {
     font-family: 'TurkishCSs', "proxima-nova-1","proxima-nova-2", Helmet, Freesans, sans-serif !important;
 }
 
@@ -415,20 +415,18 @@ nav {
 
 /* Buttons by Simon a.k.a. Simurai: simurai.com */
 .btn {
+  box-sizing: content-box;
   display: inline-block;
   margin-bottom: 10px;
 
   /* layout */
   border-radius: 6px;
   border: none;
-  height: 37px;
-  padding: 5px 0 0;
+  padding: 5px 12px 8px 40px;
   position: relative;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
   text-transform: uppercase;
-  width: 135px;
-
 
   /* style */
   background-color: #d91e76;
@@ -471,12 +469,6 @@ nav {
 /* FF3.0 and older & IE7 and below don't support :after at all or positioned.
  * What's a good Modernizr property that covers these? Modernizr.localstorage!
  */
-.localstorage.no-touch .btn {
-  display: block;
-  padding: 5px 0 0 40px;
-  text-align: left;
-  width: 140px;
-}
 .localstorage.no-touch .btn:before {
   background: url('/i/img/icons.png') 0 -350px no-repeat;
   content: '';
