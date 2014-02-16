@@ -95,7 +95,7 @@ require(['src/generate'], function( generate ) {
     var options = $.makeArray($('#options-list input:checked').map(function() {
       return this.value;
     }));
-    var classPrefix = ''; // TODO
+    var classPrefix = $('#cssprefix').val();
     var config = {
       'classPrefix': classPrefix,
       'properties': properties, // Not used by builder; we need it though
