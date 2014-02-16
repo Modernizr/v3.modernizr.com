@@ -258,4 +258,6 @@ require(['src/generate'], function( generate ) {
     build();
   });
 
+  $(window).on('hashchange', loadFromHash);
+
 });
