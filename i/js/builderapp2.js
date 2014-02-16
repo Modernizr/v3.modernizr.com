@@ -59,6 +59,7 @@ require(['src/generate'], function( generate ) {
     if ( hash.length > 1 ) {
       hash = hash.substr(1);
       var selections = hash.split('-');
+
       // Unselect everything
       $('input[type="checkbox"]').removeAttr('checked');
       for(var i in selections) {
@@ -153,7 +154,9 @@ require(['src/generate'], function( generate ) {
         //var outBox = document.getElementById('buildoutput');
         var outBoxMin = document.getElementById('generatedSource');
         var buildHash = generateBuildHash(config);
-        var banner = '/*! Modernizr 3.0.0-beta (Custom Build) | MIT\n' +
+        var isDev = (buildHash == $('#dev-build-link').attr('href'));
+        var buildType = isDev ? 'Development' : 'Custom';
+        var banner = '/*! Modernizr 3.0.0-beta (' + buildType + ' Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/' + buildHash + '\n' +
                      ' */\n';
 
