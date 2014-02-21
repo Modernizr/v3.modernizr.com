@@ -265,7 +265,6 @@ require(['src/generate'], function( generate ) {
     var config = getBuildConfig();
     var buildHash = generateBuildHash(config);
     window.location.hash = buildHash;
-    build();
   });
 
   $(window).on('hashchange', loadFromHash);
