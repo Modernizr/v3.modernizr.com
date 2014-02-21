@@ -234,7 +234,6 @@ require(['src/generate'], function( generate ) {
     });
 
     $('#features-filter').on('input', function (evt) {
-      console.log('input');
       if (!evt.currentTarget.value) {
         $('#features-filter-styles').text('');
       }
