@@ -243,6 +243,21 @@ require(['src/generate'], function( generate ) {
       }
     });
 
+    // Only show classPrefix box when css classes are enabled
+    var $setClassesChk = $('#setClasses input[type=checkbox]');
+    function showHideClassPrefix (show) {
+      if ($setClassesChk.prop('checked')) {
+        $('#classPrefix').css('visibility', 'visible');
+      }
+      else {
+        $('#classPrefix').css('visibility', 'hidden');
+      }
+    }
+    $setClassesChk.on('change', function (evt) {
+      showHideClassPrefix();
+    });
+    showHideClassPrefix();
+
     loadFromHash();
   });
 
