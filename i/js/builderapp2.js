@@ -46,9 +46,13 @@ require(['src/generate'], function( generate ) {
   }
 
   function generateBuildHash(config) {
-    var buildHash = '#-' + _(config.properties).map(function(propName) {
-        return propName.replace('-', '');
-      }).join('-') + ( config.classPrefix ? '-cssclassprefix:' + config.classPrefix.replace(/\-/g, '!') : '' );
+    // Format:
+    // #-<prop1>-<prop2>-…-<propN>-<option1>-<option2>-…<optionN>[-dontmin][-cssclassprefix:<prefix>]
+    // where prop1…N and option1…N are sorted alphabetically (for consistency)
+    var sortedProps = config.properties.sort();
+    var sortedOpts = config.options.sort();
+    var buildHash = '#-' + sortedProps.concat(sortedOpts).join('-') +
+        ( config.classPrefix ? '-cssclassprefix:' + config.classPrefix.replace(/\-/g, '!') : '' );
 
     return buildHash;
   }
