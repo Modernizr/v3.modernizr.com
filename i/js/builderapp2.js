@@ -190,9 +190,6 @@ require(['src/generate'], function( generate ) {
       name: 'html5shiv v3.6.2 w/ printshiv',
       option: 'html5printshiv'
     }, {
-      name: 'Modernizr.load (<a href="http://yepnopejs.com/">YepNope.js</a>)',
-      option: 'load'
-    }, {
       name: 'Media Queries',
       option: 'mq'
     }, {
