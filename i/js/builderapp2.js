@@ -110,7 +110,6 @@ require(['src/generate'], function( generate ) {
       'feature-detects': amdPaths,
       'options': extras.concat(extensibility)
     };
-    debugger;
 
     return config;
   }

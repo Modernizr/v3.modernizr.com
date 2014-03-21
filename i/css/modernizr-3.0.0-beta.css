@@ -1372,7 +1372,7 @@ body { height: 100%; }
     margin: 0;
     padding: 0;
     position: absolute;
-    text-indent: 12px;
+    text-indent: 0.3em;
     top: -40px;
     vertical-align: top;
     width: 100%;
