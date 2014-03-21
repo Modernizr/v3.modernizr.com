@@ -96,7 +96,7 @@ require(['src/generate'], function( generate ) {
       return this.getAttribute('data-amd-path');
     }));
     // Extras
-    var options = $.makeArray($('#options-list input:checked').map(function() {
+    var extras = $.makeArray($('#extras-list input:checked').map(function() {
       return this.value;
     }));
     // Extensibility options
@@ -108,7 +108,7 @@ require(['src/generate'], function( generate ) {
       'classPrefix': classPrefix,
       'properties': properties, // Not used by builder; we need it though
       'feature-detects': amdPaths,
-      'options': options.concat(extensibility)
+      'options': extras.concat(extensibility)
     };
     debugger;
 
