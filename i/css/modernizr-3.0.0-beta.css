@@ -637,10 +637,16 @@ input[type=search] {
   padding: 15px 10px 5px;
 }
 .builder-fieldset-list {
+  margin: 0 0 2em;
+}
+.detects-fieldset-list {
   -webkit-column-width: 15em;
   -moz-column-width: 15em;
   column-width: 15em;
-  margin: 0 0 2em;
+}
+.builder-associated-field {
+  display: block;
+  margin-top: 0.5em;
 }
 .builder li {
   padding-left: 1.15em;

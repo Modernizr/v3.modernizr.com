@@ -15,39 +15,22 @@ body_id: builder
 				<label class="builder-filter-field">Filter: <input type="search" id="features-filter" placeholder="e.g. flexbox"></label>
 				<style id="features-filter-styles"></style>
 			</div>
-			<ul id="fd-list" class="builder-fieldset-list">
+			<ul id="fd-list" class="builder-fieldset-list detects-fieldset-list">
+				<!-- Populated dynamically -->
 			</ul>
 		</fieldset>
 
 		<fieldset class="features builder">
-			<legend class="wt">Options</legend>
-			<ul id="options-list" class="builder-fieldset-list">
-				<li id="html5shiv">
-					<label>
-						<input type="checkbox" value="html5shiv">html5shiv v3.6.2
-					</label>
-				</li>
-				<li id="html5printshiv">
-					<label>
-						<input type="checkbox" value="html5printshiv">html5printshiv v3.6.2
-					</label>
-				</li>
-				<li id="mq">
-					<label>
-						<input type="checkbox" value="mq"><abbr class="help" title="`window.matchMedia` polyfill">Modernizr.mq</abbr>
-					</label>
-				</li>
-				<li id="setClasses">
-					<label>
-						<input type="checkbox" value="setClasses">Add CSS classes
-					</label>
-				</li>
-				<li id="classPrefix">
-					<label>
-						<abbr class="help" title="Add a prefix if Modernizr’s default class names conflict with your CSS. A prefix of `mod-` means classes like `.mod-video`">className prefix:</abbr>
-						<input id="cssprefix" class="textfield" type="text" name="classPrefix">
-					</label>
-				</li>
+			<legend class="wt">Extras</legend>
+			<ul id="extras-list" class="builder-fieldset-list">
+				<!-- Populated dynamically -->
+			</ul>
+		</fieldset>
+
+		<fieldset class="features builder">
+			<legend class="wt">Extensibility</legend>
+			<ul id="extensibility-list" class="builder-fieldset-list">
+				<!-- Populated dynamically -->
 			</ul>
 		</fieldset>
 
@@ -77,6 +60,24 @@ body_id: builder
 		</label>
 		<% if (detect.doc) { %>
 			<a class="help-icon" data-name="<%- detect.name %>" data-doc="<%- detect.doc %>">Info</a>
+		<% } %>
+	</li>
+</script>
+
+<script type="text/x-underscore-template" id="option-item-tpl">
+	<li id="<%- option.name %>">
+		<label>
+			<input type="checkbox" value="<%- option.name %>">
+			<%- option.label %>
+		</label>
+		<% if (option.doc) { %>
+			<a class="help-icon" data-name="<%- option.name %>" data-doc="<%- option.doc %>">Info</a>
+		<% } %>
+		<% if (option.associatedValue) { %>
+			<label id="<%= option.associatedValue.name %>" class="builder-associated-field">
+				<%- option.associatedValue.label %>
+				<input id="<%- option.associatedValue.name %>" class="textfield" type="text" name="<%- option.associatedValue.name %>">
+			</label>
 		<% } %>
 	</li>
 </script>

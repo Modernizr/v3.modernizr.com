@@ -95,8 +95,12 @@ require(['src/generate'], function( generate ) {
     var amdPaths = $.makeArray($featureCheckboxes.map(function() {
       return this.getAttribute('data-amd-path');
     }));
-    // Additional options
+    // Extras
     var options = $.makeArray($('#options-list input:checked').map(function() {
+      return this.value;
+    }));
+    // Extensibility options
+    var extensibility = $.makeArray($('#extensibility-list input:checked').map(function() {
       return this.value;
     }));
     var classPrefix = $('#cssprefix').val();
@@ -104,8 +108,9 @@ require(['src/generate'], function( generate ) {
       'classPrefix': classPrefix,
       'properties': properties, // Not used by builder; we need it though
       'feature-detects': amdPaths,
-      'options': options
+      'options': options.concat(extensibility)
     };
+    debugger;
 
     return config;
   }
@@ -184,42 +189,93 @@ require(['src/generate'], function( generate ) {
 
   var extras = [
     {
-      name: 'html5shiv v3.6.2',
-      option: 'html5shiv'
+      label: 'html5shiv v3.6.2',
+      name: 'html5shiv'
     }, {
-      name: 'html5shiv v3.6.2 w/ printshiv',
-      option: 'html5printshiv'
+      label: 'html5shiv v3.6.2 w/ printshiv',
+      name: 'html5printshiv'
     }, {
-      name: 'Media Queries',
-      option: 'mq'
+      label: 'Media Queries',
+      name: 'mq'
     }, {
-      name: 'Add CSS classes',
-      option: 'setClasses',
-      associatedValue: 'classPrefix'
+      label: 'Add CSS classes',
+      name: 'setClasses',
+      associatedValue: {
+        label: 'className prefix',
+        name: 'classPrefix'
+      }
     }
   ];
-  var extensibility = [];
+  var extensibility = [
+    {
+      label: 'Modernizr.addTest()',
+      name: 'addTest'
+    }, {
+      label: 'Modernizr.prefixed()',
+      name: 'prefixed'
+    }, {
+      label: 'Modernizr.testStyles()',
+      name: 'testStyles'
+    }, {
+      label: 'Modernizr.testProp()',
+      name: 'testProp'
+    }, {
+      label: 'Modernizr.testAllProps()',
+      name: 'testAllProps'
+    }, {
+      label: 'Modernizr.hasEvent()',
+      name: 'hasEvent'
+    }, {
+      label: 'Modernizr._prefixes',
+      name: 'prefixes'
+    }, {
+      label: 'Modernizr._domPrefixes',
+      name: 'domPrefixes'
+    }
+  ];
 
   // Load feature detects from metadata
   $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
     var $fdList = $('#fd-list');
+    var $extrasList = $('#extras-list');
+    var $extensionsList = $('#extensions-list');
     var $helpBox = $('#help-box');
+
     var detectItemTpl = _.template($('#detect-item-tpl').html());
+    var optionItemTpl = _.template($('#option-item-tpl').html());
     var helpTpl = _.template($('#help-tpl').html());
 
     detects = _.sortBy(detects, function (detect) {
       return detect.name.toLowerCase();
     });
+
+    // Create feature detect list
     $.each(detects, function (idx, detect) {
       var searchIndex = [detect.property, detect.amdPath, detect.name].concat(detect.tags).join('|').toLowerCase();
       var $li = $(detectItemTpl({
         detect: detect,
         searchIndex: searchIndex
       }));
-      // On hover
       $('#fd-list').append($li);
     });
 
+    // Create extra options list
+    $.each(extras, function (idx, option) {
+      var $li = $(optionItemTpl({
+        option: option
+      }));
+      $('#extras-list').append($li);
+    });
+
+    // Create extensibility options list
+    $.each(extensibility, function (idx, option) {
+      var $li = $(optionItemTpl({
+        option: option
+      }));
+      $('#extensibility-list').append($li);
+    });
+
+    // Handlers to show/hide help overlays
     $fdList.on('click', '.help-icon', function (evt) {
       var $help = $(helpTpl({
         name: this.getAttribute('data-name'),
@@ -234,6 +290,7 @@ require(['src/generate'], function( generate ) {
       $helpBox.removeClass('help-box--visible');
     });
 
+    // Filtering functionality for feature detects list
     $('#features-filter').on('input', function (evt) {
       if (!evt.currentTarget.value) {
         $('#features-filter-styles').text('');
@@ -247,10 +304,10 @@ require(['src/generate'], function( generate ) {
     var $setClassesChk = $('#setClasses input[type=checkbox]');
     function showHideClassPrefix (show) {
       if ($setClassesChk.prop('checked')) {
-        $('#classPrefix').css('visibility', 'visible');
+        $('#classPrefix').css('display', '');
       }
       else {
-        $('#classPrefix').css('visibility', 'hidden');
+        $('#classPrefix').css('display', 'none');
       }
     }
     $setClassesChk.on('change', function (evt) {
