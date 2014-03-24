@@ -45,12 +45,39 @@ require(['src/generate'], function( generate ) {
     return stream.toString();
   }
 
+  function getDetectObjByAmdPath(amdPath) {
+    return _.find(detects, function (detect) {
+      return detect.amdPath == amdPath;
+    });
+  }
+
+  function getOptionObjByAmdPath(amdPath) {
+    return _.find(options, function (option) {
+      return option.amdPath == amdPath;
+    });
+  }
+
   function generateBuildHash(config) {
     // Format:
     // #-<prop1>-<prop2>-…-<propN>-<option1>-<option2>-…<optionN>[-dontmin][-cssclassprefix:<prefix>]
     // where prop1…N and option1…N are sorted alphabetically (for consistency)
-    var sortedProps = config.properties.sort();
-    var sortedOpts = config.options.sort();
+
+    // Config uses amdPaths, but build hash uses property names
+    var props = $.map(config['feature-detects'], function (amdPath) {
+      var detect = getDetectObjByAmdPath(amdPath);
+      return detect.property;
+    });
+
+    // Config uses amdPaths, but build hash uses option names
+    var opts = $.map(config.options, function (amdPath) {
+      var option = getOptionObjByAmdPath(amdPath);
+      return option.name;
+    });
+
+    var sortedProps = props.sort();
+    var sortedOpts = opts.sort();
+
+    // Options are AMD paths in the config, but need to be converted to
     var buildHash = '#-' + sortedProps.concat(sortedOpts).join('-') +
         ( config.classPrefix ? '-cssclassprefix:' + config.classPrefix.replace(/\-/g, '!') : '' );
 
@@ -87,26 +114,21 @@ require(['src/generate'], function( generate ) {
 
   function getBuildConfig() {
     var $featureCheckboxes = $('#fd-list input:checked');
-    // A list of the property names, e.g. `['flexbox', …]`
-    var properties = $.makeArray($('#fd-list input:checked').map(function() {
-      return this.value;
-    }));
     // A list of the corresponding AMD paths, e.g. `['test/css/flexbox', …]`
     var amdPaths = $.makeArray($featureCheckboxes.map(function() {
       return this.getAttribute('data-amd-path');
     }));
     // Extras
     var extras = $.makeArray($('#extras-list input:checked').map(function() {
-      return this.value;
+      return this.getAttribute('data-amd-path');
     }));
     // Extensibility options
     var extensibility = $.makeArray($('#extensibility-list input:checked').map(function() {
-      return this.value;
+      return this.getAttribute('data-amd-path');
     }));
     var classPrefix = $('#cssprefix').val();
     var config = {
       'classPrefix': classPrefix,
-      'properties': properties, // Not used by builder; we need it though
       'feature-detects': amdPaths,
       'options': extras.concat(extensibility)
     };
@@ -164,6 +186,7 @@ require(['src/generate'], function( generate ) {
         var buildHash = generateBuildHash(config);
         var isDev = (buildHash == $('#dev-build-link').attr('href'));
         var buildType = isDev ? 'Development' : 'Custom';
+        debugger;
         var banner = '/*! Modernizr 3.0.0-beta (' + buildType + ' Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/' + buildHash + '\n' +
                      ' */\n';
@@ -186,19 +209,20 @@ require(['src/generate'], function( generate ) {
     });
   }
 
+  // Options are hard-coded for now
   var extras = [
     {
       label: 'html5shiv v3.6.2',
-      name: 'html5shiv'
+      name: 'shiv',
+      amdPath: 'html5shiv'
     }, {
       label: 'html5shiv v3.6.2 w/ printshiv',
-      name: 'html5printshiv'
-    }, {
-      label: 'Media Queries',
-      name: 'mq'
+      name: 'printshiv',
+      amdPath: 'html5printshiv'
     }, {
       label: 'Add CSS classes',
-      name: 'setClasses',
+      name: 'cssclasses',
+      amdPath: 'setClasses',
       associatedValue: {
         label: 'className prefix',
         name: 'classPrefix'
@@ -208,33 +232,57 @@ require(['src/generate'], function( generate ) {
   var extensibility = [
     {
       label: 'Modernizr.addTest()',
-      name: 'addTest'
-    }, {
-      label: 'Modernizr.prefixed()',
-      name: 'prefixed'
-    }, {
-      label: 'Modernizr.testStyles()',
-      name: 'testStyles'
-    }, {
-      label: 'Modernizr.testProp()',
-      name: 'testProp'
-    }, {
-      label: 'Modernizr.testAllProps()',
-      name: 'testAllProps'
+      name: 'addtest',
+      amdPath: 'addTest'
     }, {
       label: 'Modernizr.hasEvent()',
-      name: 'hasEvent'
+      name: 'hasevent',
+      amdPath: 'hasEvent'
+    }, {
+      label: 'Modernizr.mq()',
+      name: 'mq',
+      amdPath: 'mq'
+    }, {
+      label: 'Modernizr.prefixed()',
+      name: 'prefixed',
+      amdPath: 'prefixed'
+    }, {
+      label: 'Modernizr.prefixedCSS()',
+      name: 'prefixedcss',
+      amdPath: 'prefixedCSS'
+    }, {
+      label: 'Modernizr.testStyles()',
+      name: 'teststyles',
+      amdPath: 'testStyles'
+    }, {
+      label: 'Modernizr.testProp()',
+      name: 'testprop',
+      amdPath: 'testProp'
+    }, {
+      label: 'Modernizr.testAllProps()',
+      name: 'testallprops',
+      amdPath: 'testAllProps'
     }, {
       label: 'Modernizr._prefixes',
-      name: 'prefixes'
+      name: 'prefixes',
+      amdPath: 'prefixes'
     }, {
       label: 'Modernizr._domPrefixes',
-      name: 'domPrefixes'
+      name: 'domprefixes',
+      amdPath: 'domPrefixes'
     }
   ];
 
+  // Convenience array for all options
+  var options = extras.concat(extensibility);
+
+  // Define here, to be populated from metadata.json
+  var detects;
+
   // Load feature detects from metadata
-  $.get('/i/js/modernizr-git/dist/metadata.json', function(detects) {
+  $.get('/i/js/modernizr-git/dist/metadata.json', function(_detects) {
+    detects = _detects;
+
     var $fdList = $('#fd-list');
     var $extrasList = $('#extras-list');
     var $extensionsList = $('#extensions-list');

@@ -21,14 +21,14 @@ body_id: builder
 		</fieldset>
 
 		<fieldset class="features builder">
-			<legend class="wt">Extras</legend>
+			<legend class="wt">Extra</legend>
 			<ul id="extras-list" class="builder-fieldset-list">
 				<!-- Populated dynamically -->
 			</ul>
 		</fieldset>
 
 		<fieldset class="features builder">
-			<legend class="wt">Extensibility</legend>
+			<legend class="wt">APIs</legend>
 			<ul id="extensibility-list" class="builder-fieldset-list">
 				<!-- Populated dynamically -->
 			</ul>
@@ -67,7 +67,7 @@ body_id: builder
 <script type="text/x-underscore-template" id="option-item-tpl">
 	<li id="<%- option.name %>">
 		<label>
-			<input type="checkbox" value="<%- option.name %>">
+			<input type="checkbox" data-amd-path="<%- option.amdPath %>" value="<%- option.name %>">
 			<%- option.label %>
 		</label>
 		<% if (option.doc) { %>
