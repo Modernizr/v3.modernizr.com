@@ -61,6 +61,7 @@ require(['src/generate'], function( generate ) {
     // Format:
     // #-<prop1>-<prop2>-…-<propN>-<option1>-<option2>-…<optionN>[-dontmin][-cssclassprefix:<prefix>]
     // where prop1…N and option1…N are sorted alphabetically (for consistency)
+    var setClasses = false;
 
     // Config uses amdPaths, but build hash uses property names
     var props = $.map(config['feature-detects'], function (amdPath) {
@@ -70,6 +71,9 @@ require(['src/generate'], function( generate ) {
 
     // Config uses amdPaths, but build hash uses option names
     var opts = $.map(config.options, function (amdPath) {
+      if (amdPath == 'setClasses') {
+        setClasses = true;
+      }
       var option = getOptionObjByAmdPath(amdPath);
       return option.name;
     });
@@ -80,7 +84,8 @@ require(['src/generate'], function( generate ) {
     // Options are AMD paths in the config, but need to be converted to
     var buildHash = '#-' + sortedProps.concat(sortedOpts).join('-') +
         ( dontmin ? '-dontmin' : '' ) +
-        ( config.classPrefix ? '-cssclassprefix:' + config.classPrefix.replace(/\-/g, '!') : '' );
+        ( (setClasses && config.classPrefix) ?
+          '-cssclassprefix:' + config.classPrefix : '' );
 
     return buildHash;
   }
@@ -95,9 +100,9 @@ require(['src/generate'], function( generate ) {
       // Unselect everything
       $('input[type="checkbox"]').removeAttr('checked');
       for(var i in selections) {
-        if ( selections[i].match( /cssclassprefix/ ) ) {
-          var cssclassprefix = selections[i].substr(15).replace(/\!/g,'-');
-          $('#cssprefix').val(cssclassprefix);
+        if ( selections[i].match( /^cssclassprefix:/ ) ) {
+          var cssclassprefix = selections[i].substr(15);
+          $('#classPrefix input').val(cssclassprefix);
         }
         else if (selections[i] == 'dontmin'){
           $('#dontmin').attr('checked', 'checked');
@@ -106,9 +111,7 @@ require(['src/generate'], function( generate ) {
           $('input[value=' + selections[i] + ']').attr('checked', 'checked');
         }
       }
-      var checked = $('#cssclasses input:checkbox').is(':checked');
-      $('#cssprefixcontainer').toggle(checked);
-
+      var checked = $('#classPrefix input:checkbox').is(':checked');
     }
   }
 
@@ -127,7 +130,7 @@ require(['src/generate'], function( generate ) {
     var extensibility = $.makeArray($('#extensibility-list input:checked').map(function() {
       return this.getAttribute('data-amd-path');
     }));
-    var classPrefix = $('#cssprefix').val();
+    var classPrefix = $('#classPrefix input').val();
     var config = {
       'classPrefix': classPrefix,
       'feature-detects': amdPaths,
@@ -313,6 +316,7 @@ require(['src/generate'], function( generate ) {
       var $li = $(optionItemTpl({
         option: option
       }));
+      var $input = $('input[value=' + option.name + ']');
       $('#extras-list').append($li);
     });
 
@@ -350,8 +354,8 @@ require(['src/generate'], function( generate ) {
     });
 
     // Only show classPrefix box when css classes are enabled
-    var $setClassesChk = $('#setClasses input[type=checkbox]');
-    function showHideClassPrefix (show) {
+    var $setClassesChk = $('#cssclasses input[type=checkbox]');
+    function showHideClassPrefix () {
       if ($setClassesChk.prop('checked')) {
         $('#classPrefix').css('display', '');
       }
@@ -362,9 +366,9 @@ require(['src/generate'], function( generate ) {
     $setClassesChk.on('change', function (evt) {
       showHideClassPrefix();
     });
-    showHideClassPrefix();
 
     loadFromHash();
+    showHideClassPrefix();
   });
 
   $('#generate').on('click', build);
