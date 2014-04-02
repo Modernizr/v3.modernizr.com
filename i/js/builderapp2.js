@@ -141,7 +141,8 @@ require(['src/generate'], function( generate ) {
   function build() {
 
     var config = getBuildConfig();
-    var modInit = generate(config);
+    // Pass in a deep clone, because `generate()` modifies the config array *shakes fist*
+    var modInit = generate(JSON.parse(JSON.stringify(config)));
     var dontMin = $('#dontmin').prop('checked');
     var devHash = $('#dev-build-link').attr('href');
 
@@ -184,9 +185,7 @@ require(['src/generate'], function( generate ) {
         if ( config.classPrefix ) {
           output = output.replace("classPrefix : '',", "classPrefix : '" + config.classPrefix.replace(/"/g, '\\"') + "',");
         }
-        debugger;
-        //var outBox = document.getElementById('buildoutput');
-        var outBoxMin = document.getElementById('generatedSource');
+        var outBox = document.getElementById('generatedSource');
         var buildHash = generateBuildHash(config, dontMin);
         var isDev = (buildHash == devHash);
         var buildType = isDev ? 'Development' : 'Custom';
@@ -195,19 +194,17 @@ require(['src/generate'], function( generate ) {
                      ' */\n';
 
         if ( dontMin ) {
-          outBoxMin.innerHTML = banner + output;
+          outBox.innerHTML = banner + output;
         }
         else {
           require({context: 'build'}, ['uglifyjs2'], function (u2){
             var UglifyJS = u2.UglifyJS;
-            outBoxMin.innerHTML = banner + minify(UglifyJS, output, {});
+            outBox.innerHTML = banner + minify(UglifyJS, output, {});
           });
         }
 
         window.location.hash = buildHash;
 
-        // add in old hack for now, just so i don't forget
-        //outBoxMin.innerHTML = uglify( output, ['--extra', '--unsafe'] ).replace( "return a.history&&history.pushState", "return !!(a.history&&history.pushState)" );
       }
     }, function (buildText) {
       console.log({ buildOutput: buildText });
