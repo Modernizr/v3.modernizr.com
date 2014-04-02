@@ -3,56 +3,90 @@ layout:  default
 title:   Modernizr Download Builder
 body_id: builder
 ---
-            <section id="download" class="wt ">
-               <h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
-               <p class="intro-p">Use the <a href="/downloads/modernizr-latest.js">Development version</a> to develop with and learn from. Then, when you’re ready for production, use the build tool below to pick only the tests you need.</p>
+<section id="download" class="wt ">
+	<h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
+	<p class="intro-p">Use the build tool below to pick only the tests you need, or select the <a href="#-applicationcache-audio-backgroundsize-borderimage-borderradius-boxshadow-canvas-canvastext-cssanimations-csscolumns-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-draganddrop-flexbox-flexboxlegacy-fontface-generatedcontent-geolocation-hashchange-history-hsla-indexeddb-inlinesvg-input-inputtypes-localstorage-multiplebgs-opacity-postmessage-rgba-sessionstorage-smil-svg-svgclippaths-textshadow-video-webgl-websockets-websqldatabase-webworkers-addtest-cssclasses-domprefixes-hasevent-prefixed-prefixes-shiv-testallprops-testprop-teststyles-dontmin" id="dev-build-link">development preset</a>.</p>
 
-               <div class="swap-region">
-               <form action="#" class="builder">
-                  <fieldset class="options">
-                     <legend class="wt">Options</legend>
-                     <ul id="options-list">
-                     </ul>
-                  </fieldset>
-                  <fieldset class="feature-detects">
-                     <legend class="wt">Feature Detects</legend>
-                     <ul id="fd-list">
-                     </ul>
-                  </fieldset>
+	<div class="swap-region">
+	<form action="#" class="builder">
+		<fieldset class="features builder">
+			<div class="builder-fieldset-header">
+				<legend class="wt">Feature Detects</legend>
+				<label class="builder-filter-field">Filter: <input type="search" id="features-filter" placeholder="e.g. flexbox"></label>
+				<style id="features-filter-styles"></style>
+			</div>
+			<ul id="fd-list" class="builder-fieldset-list detects-fieldset-list">
+				<!-- Populated dynamically -->
+			</ul>
+		</fieldset>
 
+		<fieldset class="features builder">
+			<legend class="wt">Extra</legend>
+			<ul id="extras-list" class="builder-fieldset-list">
+				<!-- Populated dynamically -->
+			</ul>
+		</fieldset>
 
-                  <div class="buttons-area">
-                     <a href="#-generate" class="wt btn dev" id="generate">Generate! <span>(requires JavaScript)</span></a>
-                     <a class="btn2">Download custom build</a>
-                  </div>
-               </form>
+		<fieldset class="features builder">
+			<legend class="wt">APIs</legend>
+			<ul id="extensibility-list" class="builder-fieldset-list">
+				<!-- Populated dynamically -->
+			</ul>
+		</fieldset>
 
-               <div id="source">
-                  <textarea readonly="readonly" class="source-area default" id="generatedSource">// Minified source</textarea>
-                  <div class="dontmin-container"><label for="dontmin"><input type="checkbox" id="dontmin" value="dontmin" /> <small>Don't Minify Source</small></label></div>
-               </div>
+		<div id="help-box" class="help-box"></div>
 
-               </div><!-- .swap-region -->
+		<div class="buttons-area">
+			<button type="button" class="wt btn dev" id="generate">Generate! <span>(requires JavaScript)</span></button>
+			<a class="btn2">Download custom build</a>
+		</div>
 
-            </section>
+	</form>
 
-            <script>
-var data = {"feature-detects":["applicationcache","audio","battery","blob","canvas","canvastext","contenteditable","contentsecuritypolicy","contextmenu","cookies","cors","custom-protocol-handler","dart","dataview-api","draganddrop","emoji","exif-orientation","fullscreen-api","gamepad","geolocation","getusermedia","hashchange","history","ie8compat","indexedDB","input","inputtypes","json","lists-reversed","mathml","notification","pagevisibility-api","performance","pointerlock-api","postmessage","quota-management-api","requestanimationframe","svg","touch","unicode","userdata","vibration","video","web-intents","webgl","websockets","a/download","battery/lowbattery","audio/audiodata","audio/webaudio","canvas/todataurl","css/animations","css/backgroundposition-shorthand","css/backgroundposition-xy","css/backgroundrepeat","css/backgroundsize","css/backgroundsizecover","css/borderimage","css/borderradius","css/boxshadow","css/boxsizing","css/calc","css/columns","css/cubicbezierrange","css/displayrunin","css/displaytable","css/filters","css/flexbox","css/flexboxlegacy","css/fontface","css/generatedcontent","css/gradients","css/hsla","css/hyphens","css/lastchild","css/mask","css/mediaqueries","css/multiplebgs","css/objectfit","css/opacity","css/overflow-scrolling","css/pointerevents","css/positionsticky","css/reflections","css/regions","css/remunit","css/resize","css/rgba","css/scrollbars","css/subpixelfont","css/supports","css/textshadow","css/transforms","css/transforms3d","css/transitions","css/userselect","css/vhunit","css/vmaxunit","css/vminunit","css/vwunit","dom/classlist","dom/createElement-attrs","dom/dataset","dom/microdata","elem/datalist","elem/details","elem/output","elem/progress-meter","elem/ruby","elem/time","elem/track","es5/strictmode","event/deviceorientation-motion","file/api","file/filesystem","forms/fileinput","forms/formattribute","forms/inputnumber-l10n","forms/placeholder","forms/speechinput","forms/validation","iframe/sandbox","iframe/seamless","iframe/srcdoc","img/apng","img/webp-lossless","img/webp","network/connection","network/eventsource","network/xhr2","script/async","script/defer","storage/localstorage","storage/sessionstorage","storage/websqldatabase","style/scoped","svg/clippaths","svg/filters","svg/inline","svg/smil","url/data-uri","webgl/extensions","websockets/binary","window/framed","workers/blobworkers","workers/dataworkers","workers/sharedworkers","workers/webworkers"],"options":["addTest","attrs","classes","contains","createElement","cssomPrefixes","docElement","domPrefixes","fnBind","hasEvent","hasOwnProp","html5printshiv","html5shiv","injectElementWithStyles","inputattrs","inputElem","inputs","is","inputtypes","isEventSupported","load","modElem","mq","mStyle","omPrefixes","prefixed","prefixes","setClasses","setCss","setCssAll","slice","smile","testAllProps","testDOMProps","testMediaQuery","testProp","testProps","testPropsAll","testRunner","tests","testStyles","toStringFn"]};
-$(function () {
-  var fds = "";
-  $.each(data['feature-detects'], function (idx, item) {
-    fds += '<li id="'+item+'"><label><input type="checkbox" value="test/'+item+'" />'+item+'</label></li>'
-  });
+	<div id="source">
+		<textarea readonly="readonly" class="source-area default" id="generatedSource">// Minified source</textarea>
+		<div class="dontmin-container"><label for="dontmin"><input type="checkbox" id="dontmin" value="dontmin" /> <small>Don't Minify Source</small></label></div>
+	</div>
 
-  var ops = "";
-  $.each(data['options'], function (idx, item) {
-    ops += '<li id="'+item+'"><label><input type="checkbox" value="'+item+'" />'+item+'</label></li>'
-  });
+	</div><!-- .swap-region -->
 
-  $('#options-list').html(ops);
-  $('#fd-list').html(fds);
-});
-            </script>
-            <script src="/i/js/modernizr-git/r.js"></script>
-            <script src="http://underscorejs.org/underscore-min.js"></script>
-        <script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
+</section>
+
+<script type="text/x-underscore-template" id="detect-item-tpl">
+	<li id="<%- detect.property %>" data-index="<%- searchIndex %>">
+		<label>
+			<input type="checkbox" data-amd-path="<%- detect.amdPath %>" value="<%- detect.property %>">
+			<%- detect.name %>
+		</label>
+		<% if (detect.doc) { %>
+			<a class="help-icon" data-name="<%- detect.name %>" data-doc="<%- detect.doc %>">Info</a>
+		<% } %>
+	</li>
+</script>
+
+<script type="text/x-underscore-template" id="option-item-tpl">
+	<li id="<%- option.name %>">
+		<label>
+			<input type="checkbox" data-amd-path="<%- option.amdPath %>" value="<%- option.name %>">
+			<%- option.label %>
+		</label>
+		<% if (option.doc) { %>
+			<a class="help-icon" data-name="<%- option.name %>" data-doc="<%- option.doc %>">Info</a>
+		<% } %>
+		<% if (option.associatedValue) { %>
+			<label id="<%= option.associatedValue.name %>" class="builder-associated-field">
+				<%- option.associatedValue.label %>
+				<input id="<%- option.associatedValue.name %>" class="textfield" type="text" name="<%- option.associatedValue.name %>">
+			</label>
+		<% } %>
+	</li>
+</script>
+
+<script type="text/x-underscore-template" id="help-tpl">
+	<h2><%- name %></h2>
+	<%= doc %>
+</script>
+
+<script src="/i/js/modernizr-git/test/r.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
