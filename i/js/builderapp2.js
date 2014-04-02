@@ -57,7 +57,7 @@ require(['src/generate'], function( generate ) {
     });
   }
 
-  function generateBuildHash(config) {
+  function generateBuildHash(config, dontmin) {
     // Format:
     // #-<prop1>-<prop2>-…-<propN>-<option1>-<option2>-…<optionN>[-dontmin][-cssclassprefix:<prefix>]
     // where prop1…N and option1…N are sorted alphabetically (for consistency)
@@ -79,12 +79,13 @@ require(['src/generate'], function( generate ) {
 
     // Options are AMD paths in the config, but need to be converted to
     var buildHash = '#-' + sortedProps.concat(sortedOpts).join('-') +
+        ( dontmin ? '-dontmin' : '' ) +
         ( config.classPrefix ? '-cssclassprefix:' + config.classPrefix.replace(/\-/g, '!') : '' );
 
     return buildHash;
   }
 
-  // Check for preselections
+  // Selects options based on the current URL hash
   function loadFromHash() {
     var hash = window.location.hash;
     if ( hash.length > 1 ) {
@@ -108,10 +109,10 @@ require(['src/generate'], function( generate ) {
       var checked = $('#cssclasses input:checkbox').is(':checked');
       $('#cssprefixcontainer').toggle(checked);
 
-      build();
     }
   }
 
+  // Returns a build config object based on the current selections
   function getBuildConfig() {
     var $featureCheckboxes = $('#fd-list input:checked');
     // A list of the corresponding AMD paths, e.g. `['test/css/flexbox', …]`
@@ -136,11 +137,13 @@ require(['src/generate'], function( generate ) {
     return config;
   }
 
-  // Handle a build
+  // Creates a build with the current selections
   function build() {
 
     var config = getBuildConfig();
     var modInit = generate(config);
+    var dontMin = $('#dontmin').prop('checked');
+    var devHash = $('#dev-build-link').attr('href');
 
     requirejs.optimize({
       "baseUrl" : "../i/js/modernizr-git/src/",
@@ -181,17 +184,17 @@ require(['src/generate'], function( generate ) {
         if ( config.classPrefix ) {
           output = output.replace("classPrefix : '',", "classPrefix : '" + config.classPrefix.replace(/"/g, '\\"') + "',");
         }
+        debugger;
         //var outBox = document.getElementById('buildoutput');
         var outBoxMin = document.getElementById('generatedSource');
-        var buildHash = generateBuildHash(config);
-        var isDev = (buildHash == $('#dev-build-link').attr('href'));
+        var buildHash = generateBuildHash(config, dontMin);
+        var isDev = (buildHash == devHash);
         var buildType = isDev ? 'Development' : 'Custom';
-        debugger;
         var banner = '/*! Modernizr 3.0.0-beta (' + buildType + ' Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/' + buildHash + '\n' +
                      ' */\n';
 
-        if ( $('#dontmin').is(':checked') ) {
+        if ( dontMin ) {
           outBoxMin.innerHTML = banner + output;
         }
         else {
@@ -200,6 +203,8 @@ require(['src/generate'], function( generate ) {
             outBoxMin.innerHTML = banner + minify(UglifyJS, output, {});
           });
         }
+
+        window.location.hash = buildHash;
 
         // add in old hack for now, just so i don't forget
         //outBoxMin.innerHTML = uglify( output, ['--extra', '--unsafe'] ).replace( "return a.history&&history.pushState", "return !!(a.history&&history.pushState)" );
@@ -276,10 +281,10 @@ require(['src/generate'], function( generate ) {
   // Convenience array for all options
   var options = extras.concat(extensibility);
 
-  // Define here, to be populated from metadata.json
+  // Declaring here, to be populated from metadata.json
   var detects;
 
-  // Load feature detects from metadata
+  // Load feature detects from metadata, then init the page
   $.get('/i/js/modernizr-git/dist/metadata.json', function(_detects) {
     detects = _detects;
 
@@ -365,11 +370,7 @@ require(['src/generate'], function( generate ) {
     loadFromHash();
   });
 
-  $('#generate').on('click', function () {
-    var config = getBuildConfig();
-    var buildHash = generateBuildHash(config);
-    window.location.hash = buildHash;
-  });
+  $('#generate').on('click', build);
 
   $(window).on('hashchange', loadFromHash);
 
