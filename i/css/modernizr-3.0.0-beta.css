@@ -1126,6 +1126,12 @@ body { height: 100%; }
   min-height: 100%;
   height: auto !important;
   height: 100%;
+  position: relative;
+}
+@media all and (min-width: 768px) {
+  .page {
+    margin-top: -1em;
+  }
 }
 
 .footer-shim,
@@ -1146,6 +1152,19 @@ body { height: 100%; }
 
 /* I had to adjust the height and add color behind my anchor because there is
   Padding on the bottom of the #the-end section being a big jerk. */
+
+
+
+.beta-warning {
+  position: relative;
+  z-index: 1000;
+  background: #ffe761;
+  text-align: center;
+}
+.beta-warning p {
+  margin: 0;
+  padding: 0.2em 0.5em;
+}
 
 
 
