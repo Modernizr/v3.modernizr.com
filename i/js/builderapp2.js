@@ -285,7 +285,7 @@ require(['src/generate'], function( generate ) {
   var detects;
 
   // Load feature detects from metadata, then init the page
-  $.get('/i/js/modernizr-git/dist/metadata.json', function(_detects) {
+  $.get('/i/js/metadata.json', function(_detects) {
     detects = _detects;
 
     var $fdList = $('#fd-list');
