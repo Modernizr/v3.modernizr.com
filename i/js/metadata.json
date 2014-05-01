@@ -88,6 +88,9 @@
     "aliases": [
       "battery-api"
     ],
+    "builderAliases": [
+      "battery_api"
+    ],
     "tags": [
       "device",
       "media"
@@ -119,6 +122,9 @@
     "property": "blobconstructor",
     "aliases": [
       "blob-constructor"
+    ],
+    "builderAliases": [
+      "blob_constructor"
     ],
     "caniuse": "blobbuilder",
     "notes": [
@@ -413,6 +419,9 @@
     "authors": [
       "Ben Schwarz"
     ],
+    "builderAliases": [
+      "custom_protocol_handler"
+    ],
     "notes": [
       {
         "name": "WHATWG overview",
@@ -467,6 +476,9 @@
     "authors": [
       "Addy Osmani"
     ],
+    "builderAliases": [
+      "dataview_api"
+    ],
     "notes": [
       {
         "name": "MDN documentation",
@@ -477,9 +489,10 @@
       {
         "name": "jDataView",
         "authors": [
-          "Christopher Chedeau"
+          "Christopher Chedeau",
+          "Ingvar Stepanyan"
         ],
-        "href": "https://github.com/vjeux/jDataView/"
+        "href": "https://github.com/jDataView/jDataView/"
       }
     ],
     "doc": "<p>Detects support for the DataView interface for reading data from an ArrayBuffer as part of the Typed Array spec.</p>\n",
@@ -612,6 +625,9 @@
     "tags": [
       "image"
     ],
+    "builderAliases": [
+      "exif_orientation"
+    ],
     "async": true,
     "authors": [
       "Paul Sayre"
@@ -694,6 +710,9 @@
           "MIT"
         ]
       }
+    ],
+    "builderAliases": [
+      "fullscreen_api"
     ],
     "doc": null,
     "deps": [
@@ -1383,6 +1402,9 @@
         "href": "https://github.com/impressivewebs/HTML5-Reverse-Ordered-Lists"
       }
     ],
+    "builderAliases": [
+      "lists_reversed"
+    ],
     "doc": "<p>Detects support for the <code>reversed</code> attribute on the <code>&lt;ol&gt;</code> element.</p>\n",
     "deps": [
       "createElement"
@@ -1650,6 +1672,9 @@
         "href": "https://developer.mozilla.org/en-US/docs/API/Pointer_Lock_API"
       }
     ],
+    "builderAliases": [
+      "pointerlock_api"
+    ],
     "doc": null,
     "deps": [
       "prefixed"
@@ -1754,6 +1779,9 @@
     "property": "quotamanagement",
     "tags": [
       "storage"
+    ],
+    "builderAliases": [
+      "quota_management_api"
     ],
     "notes": [
       {
@@ -2283,6 +2311,9 @@
         ]
       }
     ],
+    "builderAliases": [
+      "web_intents"
+    ],
     "doc": "<p>Detects native support for the Web Intents APIs for service discovery and inter-application communication.</p>\n<p>Chrome added support for this in v19, but <a href=\"http://lists.w3.org/Archives/Public/public-web-intents/2012Nov/0000.html\">removed it again in v24</a> because of &quot;a number of areas for\ndevelopment in both the API and specific user experience in Chrome&quot;. No other browsers currently support it, however a <a href=\"http://webintents.org/#javascriptshim\">JavaScript shim</a> is available.</p>\n",
     "deps": [
       "prefixed"
@@ -2502,6 +2533,9 @@
       "media",
       "attribute"
     ],
+    "builderAliases": [
+      "a_download"
+    ],
     "notes": [
       {
         "name": "WhatWG Reference",
@@ -2611,6 +2645,9 @@
       "audio",
       "media"
     ],
+    "builderAliases": [
+      "audio_webaudio_api"
+    ],
     "authors": [
       "Addy Osmani"
     ],
@@ -2635,6 +2672,9 @@
     "tags": [
       "hardware",
       "mobile"
+    ],
+    "builderAliases": [
+      "battery_level"
     ],
     "authors": [
       "Paul Sayre"
@@ -2702,6 +2742,9 @@
     ],
     "tags": [
       "canvas"
+    ],
+    "builderAliases": [
+      "canvas_todataurl_type"
     ],
     "async": false,
     "notes": [
@@ -2914,6 +2957,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_backgroundposition_shorthand"
+    ],
     "notes": [
       {
         "name": "MDN Docs",
@@ -2947,6 +2993,9 @@
     "property": "bgpositionxy",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_backgroundposition_xy"
     ],
     "authors": [
       "Allan Lei",
@@ -2983,6 +3032,9 @@
     ],
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_backgroundrepeat"
     ],
     "authors": [
       "Ryan Seddon"
@@ -3050,6 +3102,9 @@
     "property": "bgsizecover",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_backgroundsizecover"
     ],
     "notes": [
       {
@@ -3220,6 +3275,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_boxsizing"
+    ],
     "notes": [
       {
         "name": "MDN Docs",
@@ -3248,6 +3306,9 @@
     "caniuse": "calc",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_calc"
     ],
     "authors": [
       "@calvein"
@@ -3335,6 +3396,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_cubicbezierrange"
+    ],
     "doc": null,
     "authors": [
       "@calvein"
@@ -3363,6 +3427,9 @@
     ],
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_displayrunin"
     ],
     "notes": [
       {
@@ -3396,6 +3463,9 @@
     ],
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_displaytable"
     ],
     "notes": [
       {
@@ -3500,6 +3570,9 @@
     ],
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_filters"
     ],
     "doc": null,
     "deps": [
@@ -3799,6 +3872,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_hyphens"
+    ],
     "async": true,
     "authors": [
       "David Newton"
@@ -3853,6 +3929,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_lastchild"
+    ],
     "notes": [
       {
         "name": "Related Github Issue",
@@ -3878,6 +3957,9 @@
     "property": "cssmask",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_mask"
     ],
     "notes": [
       "This is for the -webkit-mask feature, not for the similar svg mask in Firefox.",
@@ -3917,6 +3999,9 @@
     "property": "mediaqueries",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_mediaqueries"
     ],
     "doc": null,
     "deps": [
@@ -3994,6 +4079,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_objectfit"
+    ],
     "notes": [
       {
         "name": "Opera Article on Object Fit",
@@ -4043,13 +4131,16 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_overflow_scrolling"
+    ],
     "warnings": [
       "Introduced in iOS5b2. API is subject to change."
     ],
     "notes": [
       {
         "name": "Article on iOS overflow scrolling",
-        "href": "http://johanbrook.com/browsers/native-momentum-scrolling-ios-5/"
+        "href": "http://css-tricks.com/snippets/css/momentum-scrolling-on-ios-overflow-elements/"
       }
     ],
     "doc": null,
@@ -4074,6 +4165,9 @@
     ],
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_pointerevents"
     ],
     "notes": [
       {
@@ -4110,6 +4204,9 @@
     "property": "csspositionsticky",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_positionsticky"
     ],
     "notes": [
       "using position:sticky on anything but top aligned elements is buggy in Chrome < 37 and iOS <=7+",
@@ -4208,6 +4305,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_regions"
+    ],
     "notes": [
       {
         "name": "W3C Specification",
@@ -4237,6 +4337,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_remunit"
+    ],
     "notes": [
       {
         "name": "W3C Spec",
@@ -4265,6 +4368,9 @@
     "caniuse": "css-resize",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_resize"
     ],
     "notes": [
       {
@@ -4320,6 +4426,9 @@
     "property": "cssscrollbar",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_scrollbars"
     ],
     "doc": null,
     "deps": [
@@ -4404,6 +4513,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_subpixelfont"
+    ],
     "authors": [
       "@derSchepp",
       "@gerritvanaaken",
@@ -4436,6 +4548,9 @@
     "caniuse": "css-featurequeries",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_supports"
     ],
     "notes": [
       {
@@ -4622,6 +4737,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_userselect"
+    ],
     "notes": [
       {
         "name": "Related Modernizr Issue",
@@ -4646,6 +4764,9 @@
     "caniuse": "viewport-units",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_vhunit"
     ],
     "notes": [
       {
@@ -4676,6 +4797,9 @@
     "caniuse": "viewport-units",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_vmaxunit"
     ],
     "notes": [
       {
@@ -4708,6 +4832,9 @@
     "tags": [
       "css"
     ],
+    "builderAliases": [
+      "css_vminunit"
+    ],
     "notes": [
       {
         "name": "Related Modernizr Issue",
@@ -4738,6 +4865,9 @@
     "caniuse": "viewport-units",
     "tags": [
       "css"
+    ],
+    "builderAliases": [
+      "css_vwunit"
     ],
     "notes": [
       {
@@ -4826,6 +4956,9 @@
     "tags": [
       "dom"
     ],
+    "builderAliases": [
+      "dataview_api"
+    ],
     "notes": [
       {
         "name": "MDN Docs",
@@ -4853,6 +4986,9 @@
     ],
     "tags": [
       "dom"
+    ],
+    "builderAliases": [
+      "dom_createElement_attrs"
     ],
     "authors": [
       "James A. Rosen"
@@ -4885,6 +5021,9 @@
     "property": "dataset",
     "tags": [
       "dom"
+    ],
+    "builderAliases": [
+      "dom_dataset"
     ],
     "authors": [
       "@phiggins42"
@@ -4939,10 +5078,62 @@
     "cssclass": "documentfragment"
   },
   {
+    "name": "[hidden] Attribute",
+    "property": "hidden",
+    "tags": [
+      "dom"
+    ],
+    "notes": [
+      {
+        "name": "WHATWG: The hidden attribute",
+        "href": "http://developers.whatwg.org/editing.html#the-hidden-attribute"
+      },
+      {
+        "name": "original implementation of detect code",
+        "href": "https://github.com/aFarkas/html5shiv/blob/bf4fcc4/src/html5shiv.js#L38"
+      }
+    ],
+    "polyfills": [
+      {
+        "name": "HTML5 Shiv",
+        "authors": [
+          "Alexander Farkas (@aFarkas)",
+          "Jonathan Neal (@jonathantneal)",
+          "Paul Irish (@paulirish)"
+        ],
+        "href": "https://github.com/aFarkas/html5shiv",
+        "licences": [
+          "MIT",
+          "GPL2"
+        ],
+        "notes": [
+          "The HTML5 Shiv enables use of HTML5 sectioning elements in legacy Internet Explorer and provides basic HTML5 styling for Internet Explorer 6-9, Safari 4.x (and iPhone 3.x), and Firefox 3.x."
+        ]
+      }
+    ],
+    "authors": [
+      "Ron Waldon (@jokeyrhyme)"
+    ],
+    "doc": "<p>Does the browser support the HTML5 [hidden] attribute?</p>\n",
+    "deps": [
+      "createElement"
+    ],
+    "path": "./feature-detects/dom/hidden.js",
+    "amdPath": "test/dom/hidden",
+    "async": false,
+    "warnings": [],
+    "caniuse": null,
+    "cssclass": "hidden",
+    "knownBugs": []
+  },
+  {
     "name": "microdata",
     "property": "microdata",
     "tags": [
       "dom"
+    ],
+    "builderAliases": [
+      "dom_microdata"
     ],
     "notes": [
       {
@@ -4968,6 +5159,9 @@
     "property": "datalistelem",
     "tags": [
       "elem"
+    ],
+    "builderAliases": [
+      "elem_datalist"
     ],
     "warnings": [
       "This test is a dupe of Modernizr.input.list. Only around for legacy reasons."
@@ -5005,6 +5199,9 @@
     "tags": [
       "elem"
     ],
+    "builderAliases": [
+      "elem_details"
+    ],
     "authors": [
       "@mathias"
     ],
@@ -5034,6 +5231,9 @@
     "tags": [
       "elem"
     ],
+    "builderAliases": [
+      "elem_output"
+    ],
     "notes": [
       {
         "name": "WhatWG Spec",
@@ -5055,6 +5255,37 @@
     "knownBugs": []
   },
   {
+    "name": "picture Element",
+    "property": "picture",
+    "tags": [
+      "elem"
+    ],
+    "authors": [
+      "Scott Jehl",
+      "Mat Marquis"
+    ],
+    "notes": [
+      {
+        "name": "Specification",
+        "href": "http://picture.responsiveimages.org"
+      },
+      {
+        "name": "Relevant spec issue",
+        "href": "https://github.com/ResponsiveImagesCG/picture-element/issues/87"
+      }
+    ],
+    "doc": null,
+    "deps": [],
+    "path": "./feature-detects/elem/picture.js",
+    "amdPath": "test/elem/picture",
+    "polyfills": [],
+    "async": false,
+    "warnings": [],
+    "caniuse": null,
+    "cssclass": "picture",
+    "knownBugs": []
+  },
+  {
     "name": "progress Element",
     "caniuse": "progressmeter",
     "property": [
@@ -5063,6 +5294,9 @@
     ],
     "tags": [
       "elem"
+    ],
+    "builderAliases": [
+      "elem_progress_meter"
     ],
     "authors": [
       "Stefan Wallin"
@@ -5089,6 +5323,9 @@
     "property": "ruby",
     "tags": [
       "elem"
+    ],
+    "builderAliases": [
+      "elem_ruby"
     ],
     "authors": [
       "Cătălin Mariș"
@@ -5148,6 +5385,9 @@
     "tags": [
       "elem"
     ],
+    "builderAliases": [
+      "elem_time"
+    ],
     "notes": [
       {
         "name": "WhatWG Spec",
@@ -5176,6 +5416,9 @@
     ],
     "tags": [
       "elem"
+    ],
+    "builderAliases": [
+      "elem_track"
     ],
     "authors": [
       "Addy Osmani"
@@ -5206,6 +5449,55 @@
       "texttrackapi",
       "track"
     ],
+    "knownBugs": []
+  },
+  {
+    "name": "Unknown Elements",
+    "property": "unknownelements",
+    "tags": [
+      "elem"
+    ],
+    "notes": [
+      {
+        "name": "The Story of the HTML5 Shiv",
+        "href": "http://www.paulirish.com/2011/the-history-of-the-html5-shiv/"
+      },
+      {
+        "name": "original implementation of detect code",
+        "href": "https://github.com/aFarkas/html5shiv/blob/bf4fcc4/src/html5shiv.js#L36"
+      }
+    ],
+    "polyfills": [
+      {
+        "name": "HTML5 Shiv",
+        "authors": [
+          "Alexander Farkas (@aFarkas)",
+          "Jonathan Neal (@jonathantneal)",
+          "Paul Irish (@paulirish)"
+        ],
+        "href": "https://github.com/aFarkas/html5shiv",
+        "licences": [
+          "MIT",
+          "GPL2"
+        ],
+        "notes": [
+          "The HTML5 Shiv enables use of HTML5 sectioning elements in legacy Internet Explorer and provides basic HTML5 styling for Internet Explorer 6-9, Safari 4.x (and iPhone 3.x), and Firefox 3.x."
+        ]
+      }
+    ],
+    "authors": [
+      "Ron Waldon (@jokeyrhyme)"
+    ],
+    "doc": "<p>Does the browser support HTML with non-standard / new elements?</p>\n",
+    "deps": [
+      "createElement"
+    ],
+    "path": "./feature-detects/elem/unknown.js",
+    "amdPath": "test/elem/unknown",
+    "async": false,
+    "warnings": [],
+    "caniuse": null,
+    "cssclass": "unknownelements",
     "knownBugs": []
   },
   {
@@ -5340,6 +5632,54 @@
     "knownBugs": []
   },
   {
+    "name": "ES5",
+    "property": "es5",
+    "notes": [
+      {
+        "name": "ECMAScript 5.1 Language Specification",
+        "href": "http://www.ecma-international.org/ecma-262/5.1/"
+      }
+    ],
+    "polyfills": [
+      {
+        "name": "ES5 Shim",
+        "href": "https://github.com/kriskowal/es5-shim"
+      },
+      {
+        "name": "ES5 Sham",
+        "href": "https://github.com/kriskowal/es5-shim",
+        "notes": [
+          "Adds the rest of Object, read carefully before using"
+        ]
+      }
+    ],
+    "authors": [
+      "Ron Waldon (@jokeyrhyme)"
+    ],
+    "tags": [
+      "es5"
+    ],
+    "doc": "<p>Check if browser implements everything as specified in ECMAScript 5.</p>\n",
+    "deps": [
+      "test/es5/array",
+      "test/es5/date",
+      "test/es5/function",
+      "test/es5/object",
+      "test/es5/strictmode",
+      "test/es5/string",
+      "test/json",
+      "test/es5/syntax",
+      "test/es5/undefined"
+    ],
+    "path": "./feature-detects/es5/specification.js",
+    "amdPath": "test/es5/specification",
+    "async": false,
+    "warnings": [],
+    "caniuse": null,
+    "cssclass": "es5",
+    "knownBugs": []
+  },
+  {
     "name": "ES5 Strict Mode",
     "property": "strictmode",
     "caniuse": "sctrict-mode",
@@ -5354,6 +5694,9 @@
     ],
     "tags": [
       "es5"
+    ],
+    "builderAliases": [
+      "es5_strictmode"
     ],
     "doc": "<p>Check if browser implements ECMAScript 5 Object strict mode.</p>\n",
     "deps": [],
@@ -5394,6 +5737,68 @@
     "warnings": [],
     "caniuse": null,
     "cssclass": "es5string",
+    "knownBugs": []
+  },
+  {
+    "name": "ES5 Syntax",
+    "property": "es5syntax",
+    "notes": [
+      {
+        "name": "ECMAScript 5.1 Language Specification",
+        "href": "http://www.ecma-international.org/ecma-262/5.1/"
+      },
+      {
+        "name": "original implementation of detect code",
+        "href": "http://kangax.github.io/es5-compat-table/"
+      }
+    ],
+    "authors": [
+      "Ron Waldon (@jokeyrhyme)"
+    ],
+    "warnings": [
+      "This detect uses `eval()`, so CSP may be a problem."
+    ],
+    "tags": [
+      "es5"
+    ],
+    "doc": "<p>Check if browser accepts ECMAScript 5 syntax.</p>\n",
+    "deps": [],
+    "path": "./feature-detects/es5/syntax.js",
+    "amdPath": "test/es5/syntax",
+    "polyfills": [],
+    "async": false,
+    "caniuse": null,
+    "cssclass": "es5syntax",
+    "knownBugs": []
+  },
+  {
+    "name": "ES5 Immutable Undefined",
+    "property": "es5undefined",
+    "notes": [
+      {
+        "name": "ECMAScript 5.1 Language Specification",
+        "href": "http://www.ecma-international.org/ecma-262/5.1/"
+      },
+      {
+        "name": "original implementation of detect code",
+        "href": "http://kangax.github.io/es5-compat-table/"
+      }
+    ],
+    "authors": [
+      "Ron Waldon (@jokeyrhyme)"
+    ],
+    "tags": [
+      "es5"
+    ],
+    "doc": "<p>Check if browser prevents assignment to global <code>undefined</code> per ECMAScript 5.</p>\n",
+    "deps": [],
+    "path": "./feature-detects/es5/undefined.js",
+    "amdPath": "test/es5/undefined",
+    "polyfills": [],
+    "async": false,
+    "warnings": [],
+    "caniuse": null,
+    "cssclass": "es5undefined",
     "knownBugs": []
   },
   {
@@ -5678,6 +6083,9 @@
     "tags": [
       "event"
     ],
+    "builderAliases": [
+      "event_deviceorientation_motion"
+    ],
     "doc": "<p>Part of Device Access aspect of HTML5, same category as geolocation.</p>\n<p><code>devicemotion</code> tests for Device Motion Event support, returns boolean value true/false.</p>\n<p><code>deviceorientation</code> tests for Device Orientation Event support, returns boolean value true/false</p>\n",
     "deps": [],
     "path": "./feature-detects/event/deviceorientation-motion.js",
@@ -5743,6 +6151,9 @@
     "tags": [
       "file"
     ],
+    "builderAliases": [
+      "file_api"
+    ],
     "knownBugs": [
       "Will fail in Safari 5 due to its lack of support for the standards defined FileReader object"
     ],
@@ -5771,6 +6182,9 @@
     ],
     "tags": [
       "file"
+    ],
+    "builderAliases": [
+      "file_filesystem"
     ],
     "knownBugs": [
       "The API will be present in Chrome incognito, but will throw an exception. See crbug.com/93417"
@@ -5825,6 +6239,9 @@
       "forms",
       "input"
     ],
+    "builderAliases": [
+      "forms_fileinput"
+    ],
     "doc": "<p>Detects whether input type=&quot;file&quot; is available on the platform</p>\n<p>E.g. iOS &lt; 6 and some android version don&#39;t support this</p>\n",
     "deps": [
       "createElement"
@@ -5873,6 +6290,9 @@
       "forms",
       "input"
     ],
+    "builderAliases": [
+      "forms_formattribute"
+    ],
     "doc": "<p>Detects whether input form=&quot;form_id&quot; is available on the platform\nE.g. IE 10 (and below), don&#39;t support this</p>\n",
     "deps": [
       "createElement",
@@ -5910,11 +6330,14 @@
         "href": "http://trac.webkit.org/browser/trunk/LayoutTests/fast/forms/script-tests/input-number-keyoperation.js?rev=80096#L9"
       }
     ],
-    "doc": "<p>Detects whether input type=&quot;number&quot; is capable of receiving and\ndisplaying localized numbers, e.g. with comma separator</p>\n",
+    "knownBugs": "Only ever returns true if the browser/OS is configured to use comma as a decimal separator. This is probably fine for most use cases.",
+    "doc": "<p>Detects whether input type=&quot;number&quot; is capable of receiving and displaying localized numbers, e.g. with comma separator.</p>\n",
     "deps": [
       "createElement",
       "docElement",
-      "getBody"
+      "getBody",
+      "test/inputtypes",
+      "test/forms/validation"
     ],
     "path": "./feature-detects/forms/inputnumber-l10n.js",
     "amdPath": "test/forms/inputnumber-l10n",
@@ -5922,8 +6345,7 @@
     "async": false,
     "warnings": [],
     "caniuse": null,
-    "cssclass": "localizednumber",
-    "knownBugs": []
+    "cssclass": "localizednumber"
   },
   {
     "name": "placeholder attribute",
@@ -5931,6 +6353,9 @@
     "tags": [
       "forms",
       "attribute"
+    ],
+    "builderAliases": [
+      "forms_placeholder"
     ],
     "doc": "<p>Tests for placeholder attribute in inputs and textareas</p>\n",
     "deps": [
@@ -5984,6 +6409,9 @@
       "speech",
       "attribute"
     ],
+    "builderAliases": [
+      "forms_speechinput"
+    ],
     "authors": [
       "Cătălin Mariș"
     ],
@@ -6019,6 +6447,9 @@
       "validation",
       "attribute"
     ],
+    "builderAliases": [
+      "forms_validation"
+    ],
     "doc": "<p>This implementation only tests support for interactive form validation.\nTo check validation for a specific type or a specific other constraint,\nthe test can be combined:</p>\n<ul>\n<li><code>Modernizr.inputtypes.number &amp;&amp; Modernizr.formvalidation</code> (browser supports rangeOverflow, typeMismatch etc. for type=number)</li>\n<li><code>Modernizr.input.required &amp;&amp; Modernizr.formvalidation</code> (browser supports valueMissing)</li>\n</ul>\n",
     "deps": [
       "createElement",
@@ -6041,6 +6472,9 @@
     "property": "sandbox",
     "tags": [
       "iframe"
+    ],
+    "builderAliases": [
+      "iframe_sandbox"
     ],
     "notes": [
       "False-positive on Firefox < 29",
@@ -6069,6 +6503,9 @@
     "tags": [
       "iframe"
     ],
+    "builderAliases": [
+      "iframe_seamless"
+    ],
     "notes": [
       {
         "name": "WhatWG Spec",
@@ -6094,6 +6531,9 @@
     "property": "srcdoc",
     "tags": [
       "iframe"
+    ],
+    "builderAliases": [
+      "iframe_srcdoc"
     ],
     "notes": [
       {
@@ -6121,6 +6561,9 @@
     "property": "apng",
     "tags": [
       "image"
+    ],
+    "builderAliases": [
+      "img_apng"
     ],
     "notes": [
       {
@@ -6170,6 +6613,38 @@
     "caniuse": null,
     "cssclass": "jpegxr",
     "authors": [],
+    "knownBugs": []
+  },
+  {
+    "name": "sizes attribute",
+    "property": "sizes",
+    "tags": [
+      "image"
+    ],
+    "authors": [
+      "Mat Marquis"
+    ],
+    "notes": [
+      {
+        "name": "Spec",
+        "href": "http://picture.responsiveimages.org/#parse-sizes-attr"
+      },
+      {
+        "name": "Usage Details",
+        "href": "http://ericportis.com/posts/2014/srcset-sizes/"
+      }
+    ],
+    "doc": "<p>Test for the <code>sizes</code> attribute on images</p>\n",
+    "deps": [
+      "createElement"
+    ],
+    "path": "./feature-detects/img/sizes.js",
+    "amdPath": "test/img/sizes",
+    "polyfills": [],
+    "async": false,
+    "warnings": [],
+    "caniuse": null,
+    "cssclass": "sizes",
     "knownBugs": []
   },
   {
@@ -6329,6 +6804,9 @@
     "property": "webp",
     "tags": [
       "image"
+    ],
+    "builderAliases": [
+      "img_webp"
     ],
     "authors": [
       "Rich Bradshaw",
@@ -6524,6 +7002,9 @@
     "tags": [
       "network"
     ],
+    "builderAliases": [
+      "network_connection"
+    ],
     "doc": "<p>Tests for determining low-bandwidth via <code>navigator.connection</code></p>\n<p>There are two iterations of the <code>navigator.connection</code> interface.</p>\n<p>The first is present in Android 2.2+ and only in the Browser (not WebView)</p>\n<ul>\n<li><a href=\"http://docs.phonegap.com/en/1.2.0/phonegap_connection_connection.md.html#connection.type\">http://docs.phonegap.com/en/1.2.0/phonegap_connection_connection.md.html#connection.type</a></li>\n<li><a href=\"http://davidbcalhoun.com/2010/using-navigator-connection-android\">http://davidbcalhoun.com/2010/using-navigator-connection-android</a></li>\n</ul>\n<p>The second is specced at <a href=\"http://dev.w3.org/2009/dap/netinfo/\">http://dev.w3.org/2009/dap/netinfo/</a> and perhaps landing in WebKit</p>\n<ul>\n<li><a href=\"http://bugs.webkit.org/show_bug.cgi?id=73528\">http://bugs.webkit.org/show_bug.cgi?id=73528</a></li>\n</ul>\n<p>Unknown devices are assumed as fast</p>\n<p>For more rigorous network testing, consider boomerang.js: <a href=\"http://github.com/bluesmoon/boomerang/\">http://github.com/bluesmoon/boomerang/</a></p>\n",
     "deps": [],
     "path": "./feature-detects/network/connection.js",
@@ -6542,6 +7023,9 @@
     "property": "eventsource",
     "tags": [
       "network"
+    ],
+    "builderAliases": [
+      "network_eventsource"
     ],
     "notes": [
       {
@@ -6725,6 +7209,9 @@
     "tags": [
       "network"
     ],
+    "builderAliases": [
+      "network_xhr2"
+    ],
     "notes": [
       {
         "name": "W3 Spec",
@@ -6754,6 +7241,9 @@
     "tags": [
       "script"
     ],
+    "builderAliases": [
+      "script_async"
+    ],
     "authors": [
       "Theodoor van Donge"
     ],
@@ -6776,6 +7266,9 @@
     "caniuse": "script-defer",
     "tags": [
       "script"
+    ],
+    "builderAliases": [
+      "script_defer"
     ],
     "authors": [
       "Theodoor van Donge"
@@ -7010,6 +7503,9 @@
     "tags": [
       "dom"
     ],
+    "builderAliases": [
+      "style_scoped"
+    ],
     "authors": [
       "Cătălin Mariș"
     ],
@@ -7102,6 +7598,9 @@
     "caniuse": "svg-filters",
     "tags": [
       "svg"
+    ],
+    "builderAliases": [
+      "svg_filters"
     ],
     "authors": [
       "Erik Dahlstrom"
@@ -7227,6 +7726,9 @@
     "tags": [
       "url"
     ],
+    "builderAliases": [
+      "url_data_uri"
+    ],
     "async": true,
     "notes": [
       {
@@ -7325,6 +7827,9 @@
       "webgl",
       "graphics"
     ],
+    "builderAliases": [
+      "webgl_extensions"
+    ],
     "async": true,
     "authors": [
       "Ilmari Heikkinen"
@@ -7421,6 +7926,9 @@
     "tags": [
       "websockets"
     ],
+    "builderAliases": [
+      "websockets_binary"
+    ],
     "doc": null,
     "deps": [],
     "path": "./feature-detects/websockets/binary.js",
@@ -7439,6 +7947,9 @@
     "property": "framed",
     "tags": [
       "window"
+    ],
+    "builderAliases": [
+      "window_framed"
     ],
     "doc": "<p>Tests if page is iframed.</p>\n",
     "deps": [],
@@ -7459,6 +7970,9 @@
     "tags": [
       "performance",
       "workers"
+    ],
+    "builderAliases": [
+      "workers_blobworkers"
     ],
     "notes": [
       {
@@ -7491,6 +8005,9 @@
       "performance",
       "workers"
     ],
+    "builderAliases": [
+      "workers_dataworkers"
+    ],
     "notes": [
       {
         "name": "W3C Reference",
@@ -7522,6 +8039,9 @@
     "tags": [
       "performance",
       "workers"
+    ],
+    "builderAliases": [
+      "workers_sharedworkers"
     ],
     "notes": [
       {

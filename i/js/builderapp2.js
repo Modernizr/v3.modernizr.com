@@ -120,6 +120,9 @@ require(['src/generate'], function( generate ) {
           $('#dontmin').attr('checked', 'checked');
         }
         else {
+          if (selections[i] in builderAliasMap) {
+            selections[i] = builderAliasMap[selections[i]];
+          }
           $('input[value=' + selections[i] + ']').attr('checked', 'checked');
         }
       }
@@ -263,6 +266,12 @@ require(['src/generate'], function( generate ) {
       name: 'hasevent',
       amdPath: 'hasEvent'
     }, {
+      // Need to keep this so old build URLs work and include the stub,
+      // but we’ll hide it
+      label: 'Modernizr.load()',
+      name: 'load',
+      amdPath: 'load'
+    }, {
       label: 'Modernizr.mq()',
       name: 'mq',
       amdPath: 'mq'
@@ -303,6 +312,8 @@ require(['src/generate'], function( generate ) {
   // Declaring here, to be populated from metadata.json
   var detects;
 
+  var builderAliasMap = {};
+
   // Load feature detects from metadata, then init the page
   $.get('/i/js/metadata.json', function(_detects) {
     detects = _detects;
@@ -327,6 +338,11 @@ require(['src/generate'], function( generate ) {
         detect: detect,
         searchIndex: searchIndex
       }));
+      if ('builderAliases' in detect) {
+        for (var i = 0; i < detect.builderAliases.length; i++) {
+          builderAliasMap[detect.builderAliases[i]] = detect.property;
+        }
+      }
       $('#fd-list').append($li);
     });
 

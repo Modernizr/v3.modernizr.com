@@ -602,6 +602,11 @@ nav {
   margin: -3px 4px 3px 0;
 }
 
+/* Hiding the Modernizr.load option from the builder */
+#load {
+  display: none;
+}
+
 #group-extensibility, #community-feature-detects { margin-top: 0; }
 #group-extensibility details, #community-feature-detects details {
   min-height: 30px;
