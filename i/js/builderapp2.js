@@ -57,6 +57,18 @@ require(['src/generate'], function( generate ) {
     });
   }
 
+  // Generates a filename by hashing the config, so should
+  // return the same filenname for 2 matching configs
+  function getFileName (config) {
+     var res = 0,
+         str = JSON.stringify(config),
+         len = str.length;
+     for (var i = 0; i < len; i++) {
+      res = (res * 31 + str.charCodeAt(i)) % 100000;
+     }
+     return 'modernizr.custom.' + res + '.js';
+  }
+
   function generateBuildHash(config, dontmin) {
     // Format:
     // #-<prop1>-<prop2>-…-<propN>-<option1>-<option2>-…<optionN>[-dontmin][-cssclassprefix:<prefix>]
@@ -195,6 +207,7 @@ require(['src/generate'], function( generate ) {
         var banner = '/*! Modernizr 3.0.0-beta (' + buildType + ' Build) | MIT\n' +
                      ' *  Build: http://modernizr.com/download/' + buildHash + '\n' +
                      ' */\n';
+        var fileName = isDev ? 'modernizr-dev.js' : getFileName(config);
 
         if ( dontMin ) {
           outBox.innerHTML = banner + output;
@@ -205,6 +218,12 @@ require(['src/generate'], function( generate ) {
             outBox.innerHTML = banner + minify(UglifyJS, output, {});
           });
         }
+
+        // TODO: feature detect this!
+        var blob = new Blob([outBox.innerHTML], {type : 'text/javascript'});
+        $('#download-btn').prop('download', fileName)
+                          .prop('href', URL.createObjectURL(blob))
+                          .css('display', 'inline-block');
 
         window.location.hash = buildHash;
 
