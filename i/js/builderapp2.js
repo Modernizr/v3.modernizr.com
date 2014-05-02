@@ -59,7 +59,7 @@ require(['src/generate'], function( generate ) {
 
   // Generates a filename by hashing the config, so should
   // return the same filenname for 2 matching configs
-  function getFileName (config) {
+  function getFileName(config) {
      var res = 0,
          str = JSON.stringify(config),
          len = str.length;
@@ -102,8 +102,9 @@ require(['src/generate'], function( generate ) {
     return buildHash;
   }
 
-  // Selects options based on the current URL hash
-  function loadFromHash() {
+  // Build based on the current URL hash if there is one;
+  // otherwise does nothing
+  function buildFromHash() {
     var hash = window.location.hash;
     if ( hash.length > 1 ) {
       hash = hash.substr(1);
@@ -127,10 +128,11 @@ require(['src/generate'], function( generate ) {
         }
       }
       var checked = $('#classPrefix input:checkbox').is(':checked');
+      build();
     }
   }
 
-  // Returns a build config object based on the current selections
+  // Returns a build config object based on the current state of the form
   function getBuildConfig() {
     var $featureCheckboxes = $('#fd-list input:checked');
     // A list of the corresponding AMD paths, e.g. `['test/css/flexbox', …]`
@@ -155,7 +157,7 @@ require(['src/generate'], function( generate ) {
     return config;
   }
 
-  // Creates a build with the current selections
+  // Creates a build from the current state of the form
   function build() {
 
     var config = getBuildConfig();
@@ -228,7 +230,9 @@ require(['src/generate'], function( generate ) {
                           .prop('href', URL.createObjectURL(blob))
                           .css('display', 'inline-block');
 
-        window.location.hash = buildHash;
+        // Use History API to avoid an onhashchange event, otherwise
+        // it’ll trigger a rebuild and we’ll be building forever
+        window.history.pushState(null, null, buildHash);
 
       }
     }, function (buildText) {
@@ -402,12 +406,12 @@ require(['src/generate'], function( generate ) {
       showHideClassPrefix();
     });
 
-    loadFromHash();
+    buildFromHash();
     showHideClassPrefix();
   });
 
   $('#generate').on('click', build);
 
-  $(window).on('hashchange', loadFromHash);
+  $(window).on('hashchange', buildFromHash);
 
 });
