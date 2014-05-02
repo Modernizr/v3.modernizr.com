@@ -232,7 +232,7 @@ require(['src/generate'], function( generate ) {
 
         // Use History API to avoid an onhashchange event, otherwise
         // it’ll trigger a rebuild and we’ll be building forever
-        window.history.pushState(null, null, buildHash);
+        window.history.replaceState(null, null, buildHash);
 
       }
     }, function (buildText) {
