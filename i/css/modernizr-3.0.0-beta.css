@@ -1428,12 +1428,14 @@ body { height: 100%; }
   #download .buttons-area {
     float: left;
     position: relative;
-    margin: -6px 0 10px;
+    margin: 10px 0;
   }
   #download .buttons-area .btn,
   #download #modulizrize {
     float: left;
     margin: 0 0 0 10px;
+    line-height: 28px;
+    color: white;
   }
   #dontmin {
     margin-bottom: 3.5px;
