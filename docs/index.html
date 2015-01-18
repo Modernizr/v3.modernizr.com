@@ -14,7 +14,6 @@ body_id: docs
                      <li><a href="#whatis">What is Modernizr?</a></li>
                      <li><a href="#installing">Installing Modernizr</a></li>
                      <li><a href="#polyfills">Polyfills and Modernizr</a></li>
-                     <li><a href="#load">Modernizr.load() tutorial</a></li>
                      <li><a href="#howitworks">How Modernizr works</a></li>
                      <li><a href="#html5inie">HTML 5 elements in IE</a></li>
                      <li><a href="#support">Supported browsers</a></li>
@@ -67,7 +66,6 @@ body_id: docs
                <li>It tests for over 40 next-generation features, all in a matter of milliseconds</li>
                <li>It creates a JavaScript object (named <code>Modernizr</code>) that contains the results of these tests as boolean properties</li>
                <li>It adds classes to the <code>html</code> element that explain precisely what features are and are <strong>not</strong> natively supported</li>
-               <li>It provides a script loader so you can pull in <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills">polyfills</a> to backfill functionality in old browsers</li>
             </ol>
 
             <p>With this knowledge that Modernizr gives you, you can take advantage of these new features in the browsers that can render or utilize them, and still have easy <em>and reliable</em> means of controlling the situation for the browsers that cannot.</p>
@@ -85,107 +83,15 @@ body_id: docs
 
             <h3 id="polyfills">Polyfills and Modernizr</h3>
 
-            <p>The name “Modernizr” might throw you for a second, we’ll admit. The library does allow you to use the new HTML5 sectioning elements in IE, but aside from that, it doesn’t <em>modernize</em> any other features. The name Modernizr actually stems from the goal of modernizing our development practices (and ourselves). However! Modernizr still pairs extremely well with scripts that do provide support when native browser support is lacking. In general, these scripts are called polyfills.</p>
+            <p>The name “Modernizr” might throw you for a second, we’ll admit. The library does allow you to use the new HTML5 sectioning elements in IE, but aside from that, it doesn’t <em>modernize</em> any other features. The name Modernizr actually stems from the goal of modernizing our development practices (and ourselves). However! Modernizr still pairs extremely well with scripts that do provide support when native browser support is lacking. In general, these scripts are called <strong>polyfills</strong>strong>.</p>
 
             <blockquote>polyfill <em>(n)</em>: a JavaScript shim that replicates the standard API for older browsers</blockquote>
 
-            <p>So a websocket polyfill would create a <code>window.WebSocket</code> global with the same properties and methods on it as a native implementation. That means you can develop for the future, with the real API, and only load your compatibility polyfills on browsers that do not support that API or feature.</p>
+            <p>So a websocket polyfill would create a <code>window.WebSocket</code> global with the same properties and methods on it as a native implementation. That means you can develop for the future, with the real API, and use a compatibility polyfill on browsers that do not support that API or feature.</p>
 
-            <p>And good news for you, <strong><a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills">there is a polyfill for nearly every HTML5 feature that Modernizr detects</a></strong>. Yup. So in most cases, you can use a HTML5 or CSS3 feature and be able to replicate it in non-supporting browsers. Yes, not only can you use HTML5 today, but you can use it in the past, too!</p>
+            <p><strong><a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills">There is a polyfill for many of the HTML5 features that Modernizr detects</a></strong>, but that leads to a big, fat warning: <strong>just because you can use a polyfill doesn’t mean you should</strong>.</p>
 
-            <p>But that leads to a big, fat warning: <strong>just because you can use a polyfill doesn’t mean you should</strong>. You want to deliver the best user experience possible, which means it should be quick! Loading five compatibility scripts for IE7 so it looks and works the exact same as Chrome and Opera isn't a wise choice. There are no hard and fast rules, but keep in mind how adding more scripts to the page can impact the user experience. And remember, none of your users view your site in more than one browser; It’s okay if it looks and acts differently.</p>
-
-            <p>Now for more on how to effectively use and serve polyfills for all your different users, read on…</p>
-
-
-
-
-
-            <h3 id="load">Modernizr.load() tutorial</h3>
-
-            <p><code>Modernizr.load</code> is a resource loader (CSS and JavaScript) that was made to specifically to work side-by-side with Modernizr. It’s optional in your build, but if you are loading polyfills, There’s a good chance it can save you some bandwidth and boost performance a bit.</p>
-
-            <p><code>Modernizr.load</code> syntax is generally very easy to understand, so we’ll start with a basic example:</p>
-<pre>
-Modernizr.load({
-  test: Modernizr.geolocation,
-  yep : 'geo.js',
-  nope: 'geo-polyfill.js'
-});
-</pre>
-
-            <p>In this example, we decided that we should load a different script depending on whether geolocation is supported in the host browser or not. By doing this, you save users from having to download code that their browser does not need. This increases page performance, and offers a clear place to build a healthy amount of abstraction to your <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills">polyfills</a> (both 'geo.js' and 'geo-polyfill.js' would seem the same to the rest of the app, even if they're implemented differently).</p>
-
-            <p>There’s a good chance that you’re not terribly unhappy with your script downloading speeds now, but you’ll be happy to know that <code>Modernizr.load</code> does not slow anything down, and can sometimes offer a small boost in performance by loading scripts asynchronously and in parallel. There’s a lot of variables to weigh in this area, so we suggest that you try a few things to make sure you’re getting maximum performance for your specific situation.</p>
-
-            <p><code>Modernizr.load</code> is small and simple, but it can do quite a bit of heavy-lifting for you. Here is a slightly more complicated example of using <code>Modernizr.load</code> when your scripts rely on more than one Modernizr feature-test. A good technique is to wrap up multiple polyfill scripts into a single 'oldbrowser' type script, that way you don’t end up loading too many scripts at once. Here's how that might work:</p>
-
-<pre>
-<span class="comment">// Give Modernizr.load a string, an object, or an array of strings and objects</span>
-Modernizr.load([
-  <span class="comment">// Presentational polyfills</span>
-  {
-    <span class="comment">// Logical list of things we would normally need</span>
-    test : Modernizr.fontface &amp;&amp; Modernizr.canvas &amp;&amp; Modernizr.cssgradients,
-    <span class="comment">// Modernizr.load loads css and javascript by default</span>
-    nope : ['presentational-polyfill.js', 'presentational.css']
-  },
-  <span class="comment">// Functional polyfills</span>
-  {
-    <span class="comment">// This just has to be truthy</span>
-    test : Modernizr.websockets &amp;&amp; window.JSON,
-    <span class="comment">// socket-io.js and json2.js</span>
-    nope : 'functional-polyfills.js',
-    <span class="comment">// You can also give arrays of resources to load.</span>
-    both : [ 'app.js', 'extra.js' ],
-    complete : function () {
-      <span class="comment">// Run this after everything in this group has downloaded
-      // and executed, as well everything in all previous groups</span>
-      myApp.init();
-    }
-  },
-  <span class="comment">// Run your analytics after you've already kicked off all the rest
-  // of your app.</span>
-  'post-analytics.js'
-]);
-</pre>
-
-            <p>There’s a lot that you can do with <code>Modernizr.load</code>. It was released standalone as <a href="http://yepnopejs.com/">yepnope.js</a> but it was made specifically with Modernizr and feature-testing in mind. You can check out the full docs for <code>Modernizr.load</code> at <a href="http://yepnopejs.com/">yepnopejs.com</a>.</p>
-
-            <p>One cool feature of <code>Modernizr.load</code> is it’s complete decoupling of load and execution of scripts. That might not mean much to you, but users of the HTML5 Boilerplate might be familiar with the Google CDN copy of jQuery fallback. It looks something like this:</p>
-
-<pre>
-    &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">&lt;/script>
-    &lt;script>window.jQuery || document.write('&lt;script src="js/libs/jquery-1.7.1.min.js">\x3C/script>')&lt;/script>
-</pre>
-            <p>It works by trying to load in the script, and then immediately after, testing to see if the jQuery object is available. If It’s not, then they load a local copy of jQuery as a fallback. This is generally not that easy in script-loaders, but <code>Modernizr.load</code> has got you covered. You can just use the same logic, and <code>Modernizr.load</code> will handle the execution order for you:</p>
-
-<pre>
-Modernizr.load([
-  {
-    load: '//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js',
-    complete: function () {
-      if ( !window.jQuery ) {
-            Modernizr.load('js/libs/jquery-1.7.1.min.js');
-      }
-    }
-  },
-  {
-    <span class="comment">// This will wait for the fallback to load and
-    // execute if it needs to.</span>
-    load: 'needs-jQuery.js'
-  }
-]);
-</pre>
-
-            <p>A quick note, though: only use this technique as a method for fallbacks, because it can hurt performance by forcing scripts to load in serial instead of in parallel.</p>
-
-            <p><code>Modernizr.load</code> is extensible as well. You can load your own prefixes and filters for your scripts. For more advanced information on that, you can check out the docs on the <a href="http://yepnopejs.com">yepnopejs.com homepage</a>. You can even go as far as to replace entire steps of the loading process and replace them with custom logic. So start using it and saving those precious, precious bytes.</p>
-
-
-
-
-
+            <p>You want to deliver the best user experience possible, which means it should be quick! Using loads of compatibility scripts for IE9 so it looks and works the exact same as Chrome and Opera isn't a wise choice. There are no hard and fast rules, but keep in mind how adding more scripts to the page can impact the user experience. And remember, most of your users only view your site in one browser; it’s okay if it looks and acts differently.</p>
 
 
             <h3 id="howitworks">How Modernizr works</h3>
@@ -194,7 +100,7 @@ Modernizr.load([
 
             <p>Many tests in the documentation come with a small code sample to illustrate how you could use that specific test in your web development workflow. Actual use cases come in many more varieties, though. The possible uses of Modernizr are limited only by your imagination.</p>
 
-            <p>If you’re really interested in the details of how Modernizr works, look at the <a href="https://github.com/Modernizr/Modernizr/">source code</a> of modernizr.js and the various feature detects, and <a href="https://github.com/Modernizr/Modernizr/issues">dig into the project on GitHub</a>.</p>
+            <p>If you’re really interested in the details of how Modernizr works, look at the <a href="https://github.com/Modernizr/Modernizr/">source code</a>, and <a href="https://github.com/Modernizr/Modernizr/issues">get involved in the discussions on GitHub</a>.</p>
 
 
             <h3 id="html5inie">HTML 5 elements in <abbr title="Internet Explorer">IE</abbr></h3>
@@ -358,10 +264,6 @@ Modernizr.load([
                   </tr>
                   <tr>
                      <th id="canvas">Canvas</th><td>canvas</td>
-                  </tr>
-                  <tr>
-                     <td colspan="2"><p>If <code>Modernizr.canvas</code> tests false, you may want to load <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills">FlashCanvas or excanvas</a>.</p>
-                     </td>
                   </tr>
                   <tr>
                      <th id="canvastext">Canvas Text</th><td>canvastext</td>
