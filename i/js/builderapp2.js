@@ -392,6 +392,15 @@ require(['src/generate'], function( generate ) {
       }
     });
 
+    // Filter detects by selected only
+    $('#build-filter').on('change', function(evt) {
+      if($(this).is(':checked')) {
+        $('#fd-list li input:not(:checked)').closest('li').hide();
+      } else {
+        $('#fd-list li input:not(:checked)').closest('li').show();
+      }
+    })
+
     // Only show classPrefix box when css classes are enabled
     var $setClassesChk = $('#cssclasses input[type=checkbox]');
     function showHideClassPrefix () {
