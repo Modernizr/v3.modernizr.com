@@ -4,90 +4,90 @@ title:   Modernizr Download Builder
 body_id: builder
 ---
 <section id="download" class="wt ">
-	<h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
-	<p class="intro-p">Use the build tool below to pick only the tests you need, or select the <a href="#-applicationcache-audio-backgroundsize-borderimage-borderradius-boxshadow-canvas-canvastext-cssanimations-csscolumns-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-draganddrop-flexbox-flexboxlegacy-fontface-generatedcontent-geolocation-hashchange-history-hsla-indexeddb-inlinesvg-input-inputtypes-localstorage-multiplebgs-opacity-postmessage-rgba-sessionstorage-smil-svg-svgclippaths-textshadow-video-webgl-websockets-websqldatabase-webworkers-addtest-cssclasses-domprefixes-hasevent-prefixed-prefixes-shiv-testallprops-testprop-teststyles-dontmin" id="dev-build-link">development preset</a>.</p>
+  <h2><a href="/download/" class="wt dl-link">Download Modernizr {{ site.latest_version }}</a></h2>
+  <p class="intro-p">Use the build tool below to pick only the tests you need, or select the <a href="#-applicationcache-audio-backgroundsize-borderimage-borderradius-boxshadow-canvas-canvastext-cssanimations-csscolumns-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-draganddrop-flexbox-flexboxlegacy-fontface-generatedcontent-geolocation-hashchange-history-hsla-indexeddb-inlinesvg-input-inputtypes-localstorage-multiplebgs-opacity-postmessage-rgba-sessionstorage-smil-svg-svgclippaths-textshadow-video-webgl-websockets-websqldatabase-webworkers-addtest-cssclasses-domprefixes-hasevent-prefixed-prefixes-shiv-testallprops-testprop-teststyles-dontmin" id="dev-build-link">development preset</a>.</p>
 
-	<div class="swap-region">
-	<form action="#" class="builder">
-		<fieldset class="features builder">
-			<div class="builder-fieldset-header">
-				<legend class="wt">Feature Detects</legend>
-				<label class="builder-filter-field">Filter: <input type="search" id="features-filter" placeholder="e.g. flexbox"></label>
-				<label class="builder-filter-field"><input type="checkbox" id="build-filter"> Hide unselected</label>
-				<style id="features-filter-styles"></style>
-			</div>
-			<ul id="fd-list" class="builder-fieldset-list detects-fieldset-list">
-				<!-- Populated dynamically -->
-			</ul>
-		</fieldset>
+  <div class="swap-region">
+  <form action="#" class="builder">
+    <fieldset class="features builder">
+      <div class="builder-fieldset-header">
+        <legend class="wt">Feature Detects</legend>
+        <label class="builder-filter-field">Filter: <input type="search" id="features-filter" placeholder="e.g. flexbox"></label>
+        <label class="builder-filter-field"><input type="checkbox" id="build-filter"> Hide unselected</label>
+        <style id="features-filter-styles"></style>
+      </div>
+      <ul id="fd-list" class="builder-fieldset-list detects-fieldset-list">
+        <!-- Populated dynamically -->
+      </ul>
+    </fieldset>
 
-		<fieldset class="features builder">
-			<legend class="wt">Extra</legend>
-			<ul id="extras-list" class="builder-fieldset-list">
-				<!-- Populated dynamically -->
-			</ul>
-		</fieldset>
+    <fieldset class="features builder">
+      <legend class="wt">Extra</legend>
+      <ul id="extras-list" class="builder-fieldset-list">
+        <!-- Populated dynamically -->
+      </ul>
+    </fieldset>
 
-		<fieldset class="features builder">
-			<legend class="wt">APIs</legend>
-			<ul id="extensibility-list" class="builder-fieldset-list">
-				<!-- Populated dynamically -->
-			</ul>
-		</fieldset>
+    <fieldset class="features builder">
+      <legend class="wt">APIs</legend>
+      <ul id="extensibility-list" class="builder-fieldset-list">
+        <!-- Populated dynamically -->
+      </ul>
+    </fieldset>
 
-		<div id="help-box" class="help-box"></div>
+    <div id="help-box" class="help-box"></div>
 
-		<div class="buttons-area">
-			<button type="button" class="wt btn dev" id="generate">Generate</button>
-			<a class="btn" id="download-btn">Download</a>
-		</div>
+    <div class="buttons-area">
+      <button type="button" class="wt btn dev" id="generate">Generate</button>
+      <a class="btn" id="download-btn">Download</a>
+    </div>
 
-	</form>
+  </form>
 
-	<div id="source">
-		<textarea readonly="readonly" class="source-area default" id="generatedSource">// Minified source</textarea>
-		<div class="dontmin-container"><label for="dontmin"><input type="checkbox" id="dontmin" value="dontmin" /> <small>Don't Minify Source</small></label></div>
-	</div>
+  <div id="source">
+    <textarea readonly="readonly" class="source-area default" id="generatedSource">// Minified source</textarea>
+    <div class="dontmin-container"><label for="dontmin"><input type="checkbox" id="dontmin" value="dontmin" /> <small>Don't Minify Source</small></label></div>
+  </div>
 
-	</div><!-- .swap-region -->
+  </div><!-- .swap-region -->
 
 </section>
 
 <script type="text/x-underscore-template" id="detect-item-tpl">
-	<li id="<%- detect.property %>" data-index="<%- searchIndex %>">
-		<label>
-			<input type="checkbox" data-amd-path="<%- detect.amdPath %>" value="<%- detect.property %>">
-			<%- detect.name %>
-		</label>
-		<% if (detect.doc) { %>
-			<a class="help-icon" data-name="<%- detect.name %>" data-doc="<%- detect.doc %>">Info</a>
-		<% } %>
-	</li>
+  <li id="<%- detect.property %>" data-index="<%- searchIndex %>">
+    <label>
+      <input type="checkbox" data-amd-path="<%- detect.amdPath %>" value="<%= _.isArray(detect.property) ? detect.property.join('_').replace('-','_') : detect.property.replace('-','_') %>">
+      <%- detect.name %>
+    </label>
+    <% if (detect.doc) { %>
+      <a class="help-icon" data-name="<%- detect.name %>" data-doc="<%- detect.doc %>">Info</a>
+    <% } %>
+  </li>
 </script>
 
 <script type="text/x-underscore-template" id="option-item-tpl">
-	<li id="<%- option.name %>">
-		<label>
-			<input type="checkbox" data-amd-path="<%- option.amdPath %>" value="<%- option.name %>">
-			<%- option.label %>
-		</label>
-		<% if (option.doc) { %>
-			<a class="help-icon" data-name="<%- option.name %>" data-doc="<%- option.doc %>">Info</a>
-		<% } %>
-		<% if (option.associatedValue) { %>
-			<label id="<%= option.associatedValue.name %>" class="builder-associated-field">
-				<%- option.associatedValue.label %>
-				<input id="<%- option.associatedValue.name %>" class="textfield" type="text" name="<%- option.associatedValue.name %>">
-			</label>
-		<% } %>
-	</li>
+  <li id="<%- option.name %>">
+    <label>
+      <input type="checkbox" data-amd-path="<%- option.amdPath %>" value="<%- option.name %>">
+      <%- option.label %>
+    </label>
+    <% if (option.doc) { %>
+      <a class="help-icon" data-name="<%- option.name %>" data-doc="<%- option.doc %>">Info</a>
+    <% } %>
+    <% if (option.associatedValue) { %>
+      <label id="<%= option.associatedValue.name %>" class="builder-associated-field">
+        <%- option.associatedValue.label %>
+        <input id="<%- option.associatedValue.name %>" class="textfield" type="text" name="<%- option.associatedValue.name %>">
+      </label>
+    <% } %>
+  </li>
 </script>
 
 <script type="text/x-underscore-template" id="help-tpl">
-	<h2><%- name %></h2>
-	<%= doc %>
+  <h2><%- name %></h2>
+  <%= doc %>
 </script>
 
 <script src="/i/js/modernizr-git/test/r.js"></script>
-<script src="http://underscorejs.org/underscore-min.js"></script>
-<script src="/i/js/builderapp2.js?sept3" async data-currentbuildversion="{{ site.latest_version }}"></script>
+<script src="/i/js/modernizr-git/lib/build.js"></script>
+<script src="/i/js/builderapp2.js?feb8" async data-currentbuildversion="{{ site.latest_version }}"></script>
