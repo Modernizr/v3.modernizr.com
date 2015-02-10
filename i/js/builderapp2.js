@@ -1,61 +1,4 @@
-requirejs.config({
-  paths : {
-    'src' : '../i/js/modernizr-git/src'
-  }
-});
-// avoid some config
-define('underscore', function () { return _; });
-
-require(['src/generate'], function( generate ) {
-
-  function minify( UglifyJS, code, options) {
-    options = UglifyJS.defaults(options, {
-      outSourceMap : null,
-      sourceRoot   : null,
-      inSourceMap  : null,
-      fromString   : false,
-      warnings     : false
-    });
-    if (typeof files == "string") {
-      files = [ files ];
-    }
-
-    // 1. parse
-    var toplevel = UglifyJS.parse(code, {
-      filename: 'modernizr-custombuild.min.js',
-      toplevel: toplevel
-    });
-
-    // 2. compress
-    toplevel.figure_out_scope();
-    var sq = UglifyJS.Compressor({
-      warnings: options.warnings,
-      hoist_vars: true
-    });
-    toplevel = toplevel.transform(sq);
-
-    // 3. mangle
-    toplevel.figure_out_scope();
-    toplevel.compute_char_frequency();
-    toplevel.mangle_names({except: ['Modernizr']});
-
-    // 4. output
-    var stream = UglifyJS.OutputStream({});
-    toplevel.print(stream);
-    return stream.toString();
-  }
-
-  function getDetectObjByAmdPath(amdPath) {
-    return _.find(detects, function (detect) {
-      return detect.amdPath == amdPath;
-    });
-  }
-
-  function getOptionObjByAmdPath(amdPath) {
-    return _.find(options, function (option) {
-      return option.amdPath == amdPath;
-    });
-  }
+require(['build', '../lib/build-hash'], function( builder, generateBuildHash ) {
 
   // Generates a filename by hashing the config, so should
   // return the same filenname for 2 matching configs
@@ -69,37 +12,10 @@ require(['src/generate'], function( generate ) {
      return 'modernizr.custom.' + res + '.js';
   }
 
-  function generateBuildHash(config, dontmin) {
-    // Format:
-    // #-<prop1>-<prop2>-…-<propN>-<option1>-<option2>-…<optionN>[-dontmin][-cssclassprefix:<prefix>]
-    // where prop1…N and option1…N are sorted alphabetically (for consistency)
-    var setClasses = false;
-
-    // Config uses amdPaths, but build hash uses property names
-    var props = $.map(config['feature-detects'], function (amdPath) {
-      var detect = getDetectObjByAmdPath(amdPath);
-      return detect.property;
-    });
-
-    // Config uses amdPaths, but build hash uses option names
-    var opts = $.map(config.options, function (amdPath) {
-      if (amdPath == 'setClasses') {
-        setClasses = true;
-      }
-      var option = getOptionObjByAmdPath(amdPath);
-      return option.name;
-    });
-
-    var sortedProps = props.sort();
-    var sortedOpts = opts.sort();
-
-    // Options are AMD paths in the config, but need to be converted to
-    var buildHash = '#-' + sortedProps.concat(sortedOpts).join('-') +
-        ( dontmin ? '-dontmin' : '' ) +
-        ( (setClasses && config.classPrefix) ?
-          '-cssclassprefix:' + config.classPrefix : '' );
-
-    return buildHash;
+  function updateHash(hash) {
+    // Use History API to avoid an onhashchange event, otherwise
+    // it’ll trigger a rebuild and we’ll be building forever
+    window.history.replaceState(null, null, hash);
   }
 
   // Build based on the current URL hash if there is one;
@@ -161,82 +77,26 @@ require(['src/generate'], function( generate ) {
   function build() {
 
     var config = getBuildConfig();
-    // Pass in a deep clone, because `generate()` modifies the config array *shakes fist*
-    var modInit = generate(JSON.parse(JSON.stringify(config)));
     var dontMin = $('#dontmin').prop('checked');
     var devHash = $('#dev-build-link').attr('href');
+    config.minify = !dontMin;
 
-    requirejs.optimize({
-      "baseUrl" : "../i/js/modernizr-git/src/",
-      "optimize"    : "none",
-      "optimizeCss" : "none",
-      "paths" : {
-        "test" : "../../../../feature-detects"
-      },
-      "include" : ["modernizr-init"],
-      wrap: {
-        start: ";(function(window, document, undefined){",
-        end: "})(this, document);"
-      },
-      rawText: {
-        'modernizr-init' : modInit
-      },
-      onBuildWrite: function (id, path, contents) {
-        if ((/define\(.*?\{/).test(contents)) {
-          //Remove AMD ceremony for use without require.js or almond.js
-          contents = contents.replace(/define\(.*?\{/, '');
+    builder(config, function (output) {
+      var $outBox = $('#generatedSource');
+      var buildHash = generateBuildHash(config);
+      var isDev = (buildHash == devHash);
+      var fileName = isDev ? 'modernizr-dev.js' : getFileName(config);
 
-          contents = contents.replace(/\}\);\s*?$/,'');
+      $outBox.html(output);
 
-          if ( !contents.match(/Modernizr\.addTest\(/) && !contents.match(/Modernizr\.addAsyncTest\(/) ) {
-            //remove last return statement and trailing })
-            contents = contents.replace(/return.*[^return]*$/,'');
-          }
-        }
-        else if ((/require\([^\{]*?\{/).test(contents)) {
-          contents = contents.replace(/require[^\{]+\{/, '');
-          contents = contents.replace(/\}\);\s*$/,'');
-        }
-        return contents;
-      },
-      out : function (output) {
-        output = output.replace('define("modernizr-init", function(){});', '');
-        // Hack the prefix into place. Anything is way to big for something so small.
-        if ( config.classPrefix ) {
-          output = output.replace("classPrefix : '',", "classPrefix : '" + config.classPrefix.replace(/"/g, '\\"') + "',");
-        }
-        var outBox = document.getElementById('generatedSource');
-        var buildHash = generateBuildHash(config, dontMin);
-        var isDev = (buildHash == devHash);
-        var buildType = isDev ? 'Development' : 'Custom';
-        var banner = '/*! Modernizr 3.0.0-beta (' + buildType + ' Build) | MIT\n' +
-                     ' *  Build: http://modernizr.com/download/' + buildHash + '\n' +
-                     ' */\n';
-        var fileName = isDev ? 'modernizr-dev.js' : getFileName(config);
+      // TODO: feature detect this!
+      var blob = new Blob([outBox.innerHTML], {type : 'text/javascript'});
+      $('#download-btn').prop('download', fileName)
+        .prop('href', URL.createObjectURL(blob))
+        .css('display', 'inline-block');
 
-        if ( dontMin ) {
-          outBox.innerHTML = banner + output;
-        }
-        else {
-          require({context: 'build'}, ['uglifyjs2'], function (u2){
-            var UglifyJS = u2.UglifyJS;
-            outBox.innerHTML = banner + minify(UglifyJS, output, {});
-          });
-        }
+      updateHash(generateBuildHash(config));
 
-        // TODO: feature detect this!
-        var blob = new Blob([outBox.innerHTML], {type : 'text/javascript'});
-        $('#download-btn').prop('download', fileName)
-                          .prop('href', URL.createObjectURL(blob))
-                          .css('display', 'inline-block');
-
-        // Use History API to avoid an onhashchange event, otherwise
-        // it’ll trigger a rebuild and we’ll be building forever
-        window.history.replaceState(null, null, buildHash);
-
-      }
-    }, function (buildText) {
-      console.log({ buildOutput: buildText });
     });
   }
 
@@ -342,11 +202,13 @@ require(['src/generate'], function( generate ) {
         detect: detect,
         searchIndex: searchIndex
       }));
+
       if ('builderAliases' in detect) {
         for (var i = 0; i < detect.builderAliases.length; i++) {
           builderAliasMap[detect.builderAliases[i]] = detect.property;
         }
       }
+
       $('#fd-list').append($li);
     });
 
@@ -377,9 +239,16 @@ require(['src/generate'], function( generate ) {
 
       evt.stopPropagation();
     });
+
     $(document).on('click', function () {
-      $helpBox.html('');
-      $helpBox.removeClass('help-box--visible');
+      $helpBox.empty().removeClass('help-box--visible');
+    });
+
+    $('#dontmin').on('click', build);
+
+    $('.builder input[type=checkbox]').on('change', function() {
+      var dontMin = $('#dontmin').prop('checked');
+      updateHash(generateBuildHash(getBuildConfig()));
     });
 
     // Filtering functionality for feature detects list
@@ -399,7 +268,7 @@ require(['src/generate'], function( generate ) {
       } else {
         $('#fd-list li input:not(:checked)').closest('li').show();
       }
-    })
+    });
 
     // Only show classPrefix box when css classes are enabled
     var $setClassesChk = $('#cssclasses input[type=checkbox]');
@@ -411,6 +280,7 @@ require(['src/generate'], function( generate ) {
         $('#classPrefix').css('display', 'none');
       }
     }
+
     $setClassesChk.on('change', function (evt) {
       showHideClassPrefix();
     });
