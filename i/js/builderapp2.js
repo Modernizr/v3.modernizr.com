@@ -87,7 +87,7 @@ require(['build', '../lib/build-hash'], function( builder, generateBuildHash ) {
       var isDev = (buildHash == devHash);
       var fileName = isDev ? 'modernizr-dev.js' : getFileName(config);
 
-      $outBox.html(output);
+      $outBox.text(output);
 
       // TODO: feature detect this!
       var blob = new Blob([outBox.innerHTML], {type : 'text/javascript'});
