@@ -251,6 +251,17 @@ require(['build', '../lib/build-hash'], function( builder, generateBuildHash ) {
       updateHash(generateBuildHash(getBuildConfig()));
     });
 
+    $('#printshiv input:checkbox').change(function(){
+      if ( $(this).is(':checked') ) {
+        $('#shiv input:checkbox').removeAttr('checked');
+      }
+    });
+    $('#shiv input:checkbox').change(function(){
+      if ( $(this).is(':checked') ) {
+        $('#printshiv input:checkbox').removeAttr('checked');
+      }
+    });
+
     // Filtering functionality for feature detects list
     $('#features-filter').on('input', function (evt) {
       if (!evt.currentTarget.value) {
