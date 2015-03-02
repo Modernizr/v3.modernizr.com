@@ -27,7 +27,7 @@ require(['build', '../lib/build-hash'], function( builder, generateBuildHash ) {
       var selections = hash.split('-');
 
       // Unselect everything
-      $('input[type="checkbox"]').removeAttr('checked');
+      $('input[type="checkbox"]:not([value="cssclasses"])').removeAttr('checked');
       for(var i in selections) {
         if ( selections[i].match( /^cssclassprefix:/ ) ) {
           var cssclassprefix = selections[i].substr(15);
@@ -90,12 +90,12 @@ require(['build', '../lib/build-hash'], function( builder, generateBuildHash ) {
       $outBox.text(output);
 
       // TODO: feature detect this!
-      var blob = new Blob([outBox.innerHTML], {type : 'text/javascript'});
+      var blob = new Blob([$outBox.text()], {type : 'text/javascript'});
       $('#download-btn').prop('download', fileName)
         .prop('href', URL.createObjectURL(blob))
         .css('display', 'inline-block');
 
-      updateHash(generateBuildHash(config));
+      updateHash(buildHash);
 
     });
   }

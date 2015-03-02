@@ -1703,6 +1703,7 @@ body { height: 100%; }
     #download .btn {
       float: right;
       margin-right: 20px;
+      min-width: 124px;
     }
     /* Download page */
     .features {
