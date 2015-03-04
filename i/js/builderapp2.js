@@ -27,20 +27,20 @@ require(['build', '../lib/build-hash'], function( builder, generateBuildHash ) {
       var selections = hash.split('-');
 
       // Unselect everything
-      $('input[type="checkbox"]:not([value="cssclasses"])').removeAttr('checked');
+      $('input[type="checkbox"]:not([value="cssclasses"])').prop('checked', false);
       for(var i in selections) {
         if ( selections[i].match( /^cssclassprefix:/ ) ) {
           var cssclassprefix = selections[i].substr(15);
           $('#classPrefix input').val(cssclassprefix);
         }
         else if (selections[i] == 'dontmin'){
-          $('#dontmin').attr('checked', 'checked');
+          $('#dontmin').prop('checked', true);
         }
         else {
           if (selections[i] in builderAliasMap) {
             selections[i] = builderAliasMap[selections[i]];
           }
-          $('input[value=' + selections[i] + ']').attr('checked', 'checked');
+          $('input[value=' + selections[i] + ']').prop('checked', true);
         }
       }
       var checked = $('#classPrefix input:checkbox').is(':checked');
