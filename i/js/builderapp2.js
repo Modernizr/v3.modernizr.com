@@ -96,8 +96,29 @@ require(['build', '../lib/build-hash'], function( builder, generateBuildHash ) {
         .css('display', 'inline-block');
 
       updateHash(buildHash);
-
+      buildCodepenPrefillValue(fileName, $outBox.text(), buildHash);
     });
+  }
+
+  function buildCodepenPrefillValue(name, source, hash) {
+      var data = {
+        title              : name,
+        description        : "This is generated via modernizr.com/download",
+        html               : "<h1>Modernizr build auto generated</h1><p><a href='http://v3.modernizr.com/download" + hash + "'>Build hash</a></p>",
+        css                : "ul{-webkit-column-count: 3;-moz-column-count: 3;column-count: 3;}li{color:green}",
+        js                 : source
+      };
+      var ul = $('<ul>');
+      var features = hash.slice(2).split('-');
+
+      $.each(features, function(i, feature) {
+        data.css += '.no-' + feature + ' li.'+ feature +'{ color: red; }'
+        ul.append('<li class="'+ feature +'">' + feature + '</li>');
+      });
+
+      data.html += ul[0].outerHTML;
+
+      $('#codepen_data').val(JSON.stringify(data));
   }
 
   // Options are hard-coded for now
