@@ -483,6 +483,10 @@ nav {
 .localstorage.no-touch .btn.dev:before {
   background-position: 0 -300px;
 }
+.localstorage.no-touch .btn.cpp:before {
+  background: url('http://s.cdpn.io/3/cp-arrow-right.svg') 0 50% no-repeat;
+  background-size: 24px auto;
+}
 .localstorage.no-touch .btn:hover:before {
   opacity: .82;
 }

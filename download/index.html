@@ -40,8 +40,13 @@ body_id: builder
     <div class="buttons-area">
       <button type="button" class="wt btn dev" id="generate">Generate</button>
       <a class="btn" id="download-btn">Download</a>
+      <button class="wt btn dev cpp" form="codepen_prefill">Open in codepen.io</button>
     </div>
 
+  </form>
+
+  <form action="http://codepen.io/pen/define" method="POST" target="_blank" id="codepen_prefill">
+    <input type="hidden" name="data" value="" id="codepen_data">
   </form>
 
   <div id="source">
