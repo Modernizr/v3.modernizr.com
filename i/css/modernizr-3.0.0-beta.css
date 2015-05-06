@@ -708,6 +708,7 @@ input[type=search] {
   -moz-border-radius: 8px;
   border-radius: 8px;
   height: 6em;
+  -webkit-overflow-scrolling: touch;
   padding: 8px;
   width: 96%;
   width: -moz-calc(100% - 16px);
